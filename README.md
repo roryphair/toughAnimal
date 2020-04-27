@@ -3,8 +3,11 @@
 ## Background and Overview
 
 Autochess games are a relatively new type of strategy game based around selecting and positioning units on a board that will then fight with an opponents pieces.
+
 The player focuses on selecting which units and where to place them so as beat the opponents positioning. For an example of this type of game https://na.leagueoflegends.com/en/featured/events/teamfight-tactics.
+
 This will be a relatively simplized version of that where the players will select different animals which different strengths and weaknesses. The player will drag and drop on the board to counter the enemy team.
+
 The game will be broken up into waves, which each wave increasing in difficulty and the amount of units placed.
 
 ## Functionality and MVPS
@@ -19,9 +22,9 @@ In Animal Autochess, users will be able to
 ## WireFrames
 
 This app will be a single screen with a board, how to play, unit selector and links to my Github, LinkedIn, angelist profiles.
-On the screen there will be a side bar explaining how to play, basically telling you how to add and remove units. Clicking on a 
-unit in the left side bar will add it and dragging it outside the box will remove it. Inside the box, the colored squares are your
-own units which you can move around by dragging and dropping. There will be a timer that starts the next wave.
+On the screen there will be a side bar explaining how to play, basically telling you how to add and remove units.
+Clicking on a unit in the left side bar will add it and dragging it outside the box will remove it.
+Inside the box, the colored squares are your own units which you can move around by dragging and dropping. There will be a timer that starts the next wave.
 
 see animalwireframe.jpg
 
@@ -31,8 +34,7 @@ Javascript for game logic
 HTMLDOM manipulation for game interactions
 
 In addition to the entry file there will be other scripts in this project:
-game.js will have all the information pertaining to the current state of the game, what wave it is, if you have won or lost the current wave, 
-what enemy units there will be, how many player units.
+game.js will have all the information pertaining to the current state of the game, what wave it is, if you have won or lost the current wave, what enemy units there will be, how many player units.
 board.js will house all the units, both the players and the enemies units.
 unit.js will be a parent class with the base level of interaction like health, current target, attack damage, rang, moving into position to attack, dieing.
 individual-unit.js will be a sub-class that will have specific logic associated with that class, i.e. gibbon will have a longer range, do less damage and so on.
