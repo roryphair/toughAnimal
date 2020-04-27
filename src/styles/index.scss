@@ -1,0 +1,60 @@
+.unit{
+    position: absolute;
+    display: flex;
+    top:20px;
+    width: 100px;
+    height: 100px
+}
+#target{
+    position: absolute;
+    display: flex;
+    top:450px;
+    left: 450px;
+    color: red;
+    font-family: fantasy;
+    font-size: 40px;
+}
+
+.board-square{
+    display: flex;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: blue 2px solid;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.main-top{
+    display: flex;
+    justify-content: center;
+}
+.main-middle{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 20px;
+}
+.main-bottom{
+    display: flex;
+    justify-content: center;
+}
+.units-sidebar{ 
+    width: 300px;
+    height: 800px;
+    border: black 2px solid;
+}
+.how-to-play{
+    width: 300px;
+    height: 800px;
+    border: black 2px solid;
+}
+.board{
+    position: relative;
+    width: 800px;
+    height: 800px;
+    border: black 2px solid;
+    margin: 0px 20px;
+}
