@@ -15,12 +15,18 @@
     font-size: 40px;
 }
 
-.board-square{
+.board-square-player, .board-square-enemy{
     display: flex;
     position: absolute;
     width: 100px;
     height: 100px;
-    border: blue 2px solid;
+}
+
+.board-square-player {
+    border: blue 2px dashed;
+}
+.board-square-enemy {
+    border: red 2px dotted;
 }
 .main{
     display: flex;
