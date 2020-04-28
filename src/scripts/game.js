@@ -1,15 +1,18 @@
 import Board from './board';
 class Game{
     constructor(){
-        this.buttonLogic = this.buttonLogic.bind(this);
         this.playerUnits = [];
-        this.board = new Board(this.playerUnits);
-        this.buttonLogic();
+        this.enemyUnits = [];
+        this.board = new Board(this.playerUnits, this.enemyUnits);
+        this.makeButton();
+
     }
 
-    buttonLogic(){
-        const button = document.getElementById('test-button');
+    makeButton(){
+        const button = document.getElementById('make-unit-button');
         button.onclick = this.board.makePlayerUnit ;
+        const button2 = document.getElementById('start-fight-button');
+        button2.onclick = this.board.startFight ;
     }
     
 }
