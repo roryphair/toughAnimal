@@ -9,7 +9,6 @@
 }
 .player{
     filter: drop-shadow(0px 0px 10px blue);
-
 }
 .enemy{
     filter: hue-rotate(270deg) drop-shadow(0px 0px 10px red);
@@ -66,21 +65,24 @@
     justify-content: center;
 }
 .units-sidebar{ 
+    min-width: 300px;
     width: 300px;
     height: 800px;
     border: black 2px solid;
 }
 .how-to-play{
+    min-width: 300px;
     width: 300px;
     height: 800px;
     border: black 2px solid;
 }
 .board{
+    min-width: 800px;
     position: relative;
     width: 800px;
     height: 800px;
     border: black 2px solid;
     margin: 0px 20px;
-    background-image: url('../assets/units/back.jpg');
+    background-image: url('../assets/units/background2.jpg');
     background-size: 800px 800px;
 }

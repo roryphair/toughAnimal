@@ -3,23 +3,17 @@ class Unit {
         this.player = player;
         this.board = board;
         this.spot = [0,0];
-        this.speed = 2;
-        this.range = 1;
-        this.attack = 10;
-        this.health = 100;
         this.dead = false;
-        this.imgMove = './src/assets/units/dogMove.png';
-        this.imgBase = './src/assets/units/dogStand.png';
-        this.imgFight = './src/assets/units/dogFight.png';
         this.img = null;
         this.healthBar = null;
         this.makeUnit(pos);
         this.fight = false;
         if(player) this.dragElement(this.unit, this);
-        this.unit.src = this.imgBase;
         this.move = this.move.bind(this);
         this.target = null;
-        this.inRange = 0;
+        this.attackCooldown = 0;
+        this.timer = 0;
+        this.imgChange = -35;
     }
 
     startFight(){
@@ -28,8 +22,16 @@ class Unit {
         requestAnimationFrame(this.move);
     }
 
+    changeImg(newImg, force = null){
+        if((this.timer > (this.imgChange + 60)) || force){
+            this.imgChange = this.timer;
+            this.unit.src = newImg;
+        }
+    }
+
     endFight(){
         this.fight = false;
+        this.changeImg(this.imgBase, true);
     }
 
     getTarget(){
@@ -54,38 +56,87 @@ class Unit {
         }
     }
 
+    checkCollision(){
+        let leftNudge = 0;
+        let topNudge = 0;
+        const totalUnits = this.board.enemyUnits.concat(this.board.playerUnits);
+        totalUnits.forEach( enemy => {
+            if(enemy !== this){
+                const leftClose = enemy.unit.offsetLeft - this.unit.offsetLeft;
+                const topClose = enemy.unit.offsetTop- this.unit.offsetTop;
+                const dist =  Math.sqrt(leftClose**2 + topClose**2);
+            if(dist === 0){
+                topNudge = 1;
+                leftNudge = 1;
+            }
+            else if (dist < 90){
+                leftNudge += leftClose/dist;
+                topNudge += topClose/dist ;
+            }
+            }
+        })
+        if(this.unit.offsetLeft < 0){
+            leftNudge = -2;
+        }else if(this.unit.offsetLeft > 700){
+            leftNudge = 2;
+        }
+        if(this.unit.offsetTop < 0){
+            topNudge = -2;
+        }else if(this.unit.offsetTop > 700){
+            topNudge = 2;
+        }
+        return [topNudge, leftNudge];
+    }
+
     move(){
         if(this.fight && !this.dead){
+            this.timer += 1;
+            const nudge = this.checkCollision();
+            const topNudge = nudge[0];
+            const leftNudge = nudge[1];
             if(this.target && !this.target.dead){
+                this.attackCooldown += 1;
                 let y = this.unit.offsetTop - this.target.unit.offsetTop;
                 let x = this.unit.offsetLeft - this.target.unit.offsetLeft;
                 const h =  Math.sqrt(x**2 + y**2);
-                if(h > (this.range * 100)){
-                    this.inRange = 0;
+                
+                if(h > (this.range * 130)){
                     x = x /h;
                     y = y/h;
                     x < 0 ? this.unit.style.transform = 'scaleX(1)' : this.unit.style.transform = 'scaleX(-1)';
-                    this.unit.style.top = (this.unit.offsetTop - this.speed * y) + "px";
-                    this.unit.style.left = (this.unit.offsetLeft - this.speed * x) + "px";
-                    this.unit.src = this.imgMove;
+
+                    this.changeImg(this.imgMove);
                     this.setHealthBar();
                 }
                 else{
-                    this.inRange += 1;
-                    if(this.inRange > 30){
+                    x = 0;
+                    y = 0;
+                    if(this.attackCooldown > 120){
                         this.attackTarget()
-                        this.unit.src = this.imgFight;
-                        this.inRange= 0;
+                        this.changeImg(this.imgFight, true);
+                        this.attackCooldown= 0;
                     }
+                    else{   
+                        this.changeImg( this.imgBase);
+                    }
+                    
                 }
+                const special = this.specialMovement();
+                this.unit.style.top = (this.unit.offsetTop - topNudge - this.speed * y + special[0]) + "px";
+                this.unit.style.left = (this.unit.offsetLeft - leftNudge - this.speed * x + special[1] ) + "px";
+                this.setHealthBar();
                 requestAnimationFrame(this.move)
             } else{
                 this.getTarget();
                 requestAnimationFrame(this.move)
             }
         }else{
-            this.unit.src = this.imgBase;
+            this.changeImg( this.imgBase);
         }
+    }
+
+    specialMovement(){
+        return[0,0];
     }
 
     attackTarget(){
@@ -161,8 +212,7 @@ class Unit {
             }
         }
       
-        function closeDragElement() {
-            
+        function closeDragElement() {   
         if(!unit.fight){
                 elmnt.style.top = Math.max(Math.min(Math.round( (elmnt.offsetTop - pos2)/100)* 100 , 700),0) + "px";
                 elmnt.style.left = Math.min(Math.round((elmnt.offsetLeft - pos1)/100)* 100, 300) + "px";

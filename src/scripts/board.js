@@ -1,32 +1,68 @@
-import Unit from './unit';
+import Dog from './units/dog';
+import Gibbon from './units/gibbon';
+import Otter from './units/otter';
+import Goat from './units/goat';
+import Llama from './units/llama';
+import Sal from './units/sal';
+import Chilla from './units/chilla';
+
 class Board {
-    constructor(playerUnits, enemyUnits){
+    constructor(playerUnits, enemyUnits, game){
+        this.game = game;
         this.playerUnits = playerUnits;
         this.enemyUnits = enemyUnits;
         this.grid = [];
+        this.squares = [];
+        this.waveStarted = false;
         this.resetGrid(8);
         this.parent = document.getElementById('board');
         this.buildGrid();
-        this.makePlayerUnit = this.makePlayerUnit.bind(this);
+        this.makeUnit = this.makeUnit.bind(this);
         this.makeEnemyUnit = this.makeEnemyUnit.bind(this);
-        this.makeWave()
         this.startFight = this.startFight.bind(this);
+        this.clearGrid = this.clearGrid.bind(this);
+        this.totalUnits = document.getElementById('total-units')
+        this.maxPlayer = 0;
     }
 
     startFight(e){
         e.preventDefault();
-        this.playerUnits.forEach(player => player.startFight());
-        this.enemyUnits.forEach(enemy => enemy.startFight());
-    }
-    endFight(){
-        this.playerUnits.forEach(player => player.endFight());
-        this.enemyUnits.forEach(enemy => enemy.endFight());
+        if(!this.waveStarted){
+            this.waveStarted = true;
+            this.clearGrid();
+            this.playerUnits.forEach(player => player.startFight());
+            this.enemyUnits.forEach(enemy => enemy.startFight());
+        }
     }
 
-    makeWave(){
-        this.makeEnemyUnit([4,5]);
-        this.makeEnemyUnit([7,6]);
-        this.makeEnemyUnit([1,7]);
+    winWave(){
+        this.waveStarted = false;
+        this.playerUnits.forEach(player => {
+            player.endFight();
+        });
+    }
+    loseWave(){
+        this.waveStarted = false;
+        this.enemyUnits.forEach(enemy => {
+            enemy.endFight();
+        });
+    }
+
+    makeWave(enemies, playerAmount){
+        this.setGrid();
+        this.maxPlayer = playerAmount;
+        enemies.forEach(enemy => {
+            this.makeEnemyUnit(enemy[0], enemy[1]);
+        });
+        this.playerUnits.forEach( (player) => {
+            player.deleteSelf();
+        })
+        this.setPlayerTotal();
+    }
+
+    setPlayerTotal(){
+        debugger
+        this.totalUnits.innerHTML = 'Animals Left: ' +  (this.maxPlayer - this.playerUnits.length);
     }
 
     resetGrid(n){
@@ -43,28 +79,104 @@ class Board {
     
     buildGrid(){
         for (let i = 0; i < this.grid.length; i++) {
+            const subArr = []
             for (let j = 0; j < this.grid.length; j++) {
                 const square = document.createElement('div');
-                if(j < 4){
-                    square.className = 'board-square-player';
-                }
-                else{
-                    square.className = 'board-square-enemy';
-                }
                 square.style.top = (i * 100) + 'px';
                 square.style.left = (j * 100) + 'px';
                 this.parent.appendChild(square);
+                subArr.push(square);
+            }
+            this.squares.push(subArr);
+        }
+    }
+
+    setGrid(){
+        for (let i = 0; i < this.grid.length; i++) {
+            for (let j = 0; j < this.grid.length; j++) {
+                if(j < 4){
+                    this.squares[i][j].className = 'board-square-player';
+                }
+                else{
+                    this.squares[i][j].className = 'board-square-enemy';
+                }
+        }   }
+    }
+
+    clearGrid(){
+        for (let i = 0; i < this.grid.length; i++) {
+            for (let j = 0; j < this.grid.length; j++) {
+                this.squares[i][j].className = '';
             }
         }
     }
     
-    makePlayerUnit(e){
-        e.preventDefault();
-        const unit = new Unit(this, [0,0], true);
-        this.playerUnits.push(unit);
+    makeUnit(unitName){
+        return e => {
+            if(this.playerUnits.length < this.maxPlayer){
+                e.preventDefault();
+                let Unit;
+                switch(unitName){
+                    case 'dog':
+                        Unit = Dog;
+                        break;
+                    case 'gibbon':
+                        Unit = Gibbon;
+                        break;
+                    case 'otter':
+                        Unit = Otter;
+                        break;
+                    case 'goat':
+                        Unit = Goat;
+                        break;
+                    case 'llama':
+                        Unit = Llama;
+                        break;
+                    case 'sal':
+                        Unit = Sal;
+                        break;
+                    case 'chilla':
+                        Unit = Chilla;
+                        break;
+                    default:
+                        Unit = Dog;
+                        break;
+                }
+                const unit = new Unit(this, [0,0], true);
+                this.playerUnits.push(unit);
+                this.setPlayerTotal();
+            }
+        }
     }
 
-    makeEnemyUnit(pos){
+    makeEnemyUnit(unitName, pos){
+        let Unit;
+        switch(unitName){
+                case 'dog':
+                    Unit = Dog;
+                    break;
+                case 'gibbon':
+                    Unit = Gibbon;
+                    break;
+                case 'otter':
+                    Unit = Otter;
+                    break;
+                case 'goat':
+                    Unit = Goat;
+                    break;
+                case 'llama':
+                    Unit = Llama;
+                    break;
+                case 'sal':
+                    Unit = Sal;
+                    break;
+                case 'chilla':
+                    Unit = Chilla;
+                    break;
+                default:
+                    Unit = Dog;
+                    break;
+            }
         const unit = new Unit(this, pos, false);
         this.enemyUnits.push(unit);
     }
@@ -74,11 +186,14 @@ class Board {
         if(player){
             const spot = this.playerUnits.indexOf(unit);
             this.playerUnits = this.playerUnits.slice(0, spot).concat(this.playerUnits.slice(spot+ 1, this.playerUnits.length));
-            if(this.playerUnits.length === 0) this.endFight();
+            if(this.playerUnits.length === 0) this.loseWave();
+            if(!this.waveStarted){
+                this.setPlayerTotal();
+            }
         }else{
             const spot = this.enemyUnits.indexOf(unit);
             this.enemyUnits = this.enemyUnits.slice(0, spot).concat(this.enemyUnits.slice(spot+ 1, this.enemyUnits.length));
-            if(this.enemyUnits.length === 0) this.endFight();
+            if(this.enemyUnits.length === 0) this.winWave();
         }
     }
 
