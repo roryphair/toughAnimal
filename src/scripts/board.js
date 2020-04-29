@@ -36,12 +36,15 @@ class Board {
     }
 
     winWave(){
+        this.game.makeOverlay(true);
         this.waveStarted = false;
         this.playerUnits.forEach(player => {
             player.endFight();
         });
     }
+
     loseWave(){
+        this.game.makeOverlay(false);
         this.waveStarted = false;
         this.enemyUnits.forEach(enemy => {
             enemy.endFight();
@@ -51,17 +54,20 @@ class Board {
     makeWave(enemies, playerAmount){
         this.setGrid();
         this.maxPlayer = playerAmount;
-        enemies.forEach(enemy => {
-            this.makeEnemyUnit(enemy[0], enemy[1]);
-        });
+        this.enemyUnits.forEach( (enemy) => {
+            enemy.deleteSelf();
+        })
         this.playerUnits.forEach( (player) => {
             player.deleteSelf();
         })
+        enemies.forEach(enemy => {
+            this.makeEnemyUnit(enemy[0], enemy[1]);
+        });
+        
         this.setPlayerTotal();
     }
 
     setPlayerTotal(){
-        debugger
         this.totalUnits.innerHTML = 'Animals Left: ' +  (this.maxPlayer - this.playerUnits.length);
     }
 
@@ -186,14 +192,14 @@ class Board {
         if(player){
             const spot = this.playerUnits.indexOf(unit);
             this.playerUnits = this.playerUnits.slice(0, spot).concat(this.playerUnits.slice(spot+ 1, this.playerUnits.length));
-            if(this.playerUnits.length === 0) this.loseWave();
+            if(this.playerUnits.length === 0 && this.waveStarted) this.loseWave();
             if(!this.waveStarted){
                 this.setPlayerTotal();
             }
         }else{
             const spot = this.enemyUnits.indexOf(unit);
             this.enemyUnits = this.enemyUnits.slice(0, spot).concat(this.enemyUnits.slice(spot+ 1, this.enemyUnits.length));
-            if(this.enemyUnits.length === 0) this.winWave();
+            if(this.enemyUnits.length === 0 && this.waveStarted) this.winWave();
         }
     }
 

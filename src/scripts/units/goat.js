@@ -7,7 +7,7 @@ class Goat extends Unit{
         this.imgBase = './src/assets/units/goatStand.png';
         this.imgFight = './src/assets/units/goatFight.png';
         this.speed = 2;
-        this.range = 1;
+        this.range = 1.3;
         this.attack = 15;
         this.health = 50;
         this.unit.src = this.imgBase;

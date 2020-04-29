@@ -6,7 +6,7 @@ class Dog extends Unit{
         this.imgMove = './src/assets/units/dogMove.png';
         this.imgBase = './src/assets/units/dogStand.png';
         this.imgFight = './src/assets/units/dogFight.png';
-        this.speed = 2.5;
+        this.speed = 2;
         this.range = 1;
         this.attack = 10;
         this.health = 100;

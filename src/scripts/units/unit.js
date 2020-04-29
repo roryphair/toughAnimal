@@ -111,7 +111,7 @@ class Unit {
                 else{
                     x = 0;
                     y = 0;
-                    if(this.attackCooldown > 120){
+                    if(this.attackCooldown > 90){
                         this.attackTarget()
                         this.changeImg(this.imgFight, true);
                         this.attackCooldown= 0;
@@ -249,7 +249,7 @@ class Unit {
     }
 
     setHealthBar(){
-        this.healthBar.style.top = (this.unit.offsetTop - 50) + 'px';
+        this.healthBar.style.top = (this.unit.offsetTop - 40) + 'px';
         this.healthBar.style.left = (this.unit.offsetLeft + 30) + 'px';
     }
 
