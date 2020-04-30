@@ -2,7 +2,7 @@ import Unit from './unit';
 
 class Otter extends Unit{
     constructor(board, pos, player){
-        super(board, pos, player)
+        super(board, pos, player, './src/assets/sounds/otter.mp3')
         this.imgMove = './src/assets/units/otterMove.png';
         this.imgBase = './src/assets/units/otterStand.png';
         this.imgFight = './src/assets/units/otterFight.png';
@@ -10,6 +10,7 @@ class Otter extends Unit{
         this.range = 1;
         this.attack = 20;
         this.health = 30;
+        this.sound.volume = 0.07;
         this.unit.src = this.imgBase;
         this.healthBar.innerHTML = this.health;
     }
@@ -25,6 +26,7 @@ class Otter extends Unit{
     }
 
     attackTarget(){
+        if(window.soundsOn) this.sound.play();
         this.target.takeDamage(this.attack);
         this.getTarget();
     }

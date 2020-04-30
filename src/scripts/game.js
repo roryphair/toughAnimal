@@ -7,9 +7,7 @@ class Game{
         document.getElementById('board').append(music);
         this.music = music;
         this.music.loop = true;
-        this.music.volume = 0.1;
         this.board = new Board(this.playerUnits, this.enemyUnits, this);
-        this.makeButton();
         this.wave = 1;
         this.playerAmount = 1;
         this.waveData = [];
@@ -21,19 +19,83 @@ class Game{
         this.board.makeWave(this.playerAmount);
         this.win = this.win.bind(this);
         this.lose = this.lose.bind(this);
-        this.baseMusic()
+        this.startMusic = this.startMusic.bind(this);
+        this.startSounds = this.startSounds.bind(this);
+        this.makeButton();
+        this.changeMusic('base');
+        this.timer = 0;
+        window.soundsOn = true ;
+        this.background = document.getElementById('html');
+        this.backgroundChange = this.backgroundChange.bind(this);
+        requestAnimationFrame(this.backgroundChange);
+        this.animals = ['dog', 'gibbon','otter','goat','llama','sal','chilla'];
     }
 
-    fightMusic(){
-        this.music.src = './src/assets/music/fight.mp3';
-        this.music.play();
+    backgroundChange(){
+        this.timer += 1;
+        this.background.style.backgroundColor = `rgba(${ Math.sin(this.timer / 345) * 125}, 0 , ${Math.sin(this.timer/ 234) * 255}, 0.7)`;
+        requestAnimationFrame(this.backgroundChange);
+    
     }
-    baseMusic(){
-        this.music.src = './src/assets/music/prepare.mp3';
-        this.music.play();
+  
+    changeMusic(song){
+        const paused = !this.music.paused;
+        switch(song){
+            case 'fight':
+                this.music.src = './src/assets/music/fight.mp3';
+                this.music.volume = 0.15;
+                break;
+            case 'base':
+                this.music.src = './src/assets/music/prepare.mp3';
+                this.music.volume = 0.1;
+                break;
+            case 'win':
+                this.music.src = './src/assets/music/win.mp3';
+                this.music.volume = 0.05;
+                break;
+            case 'lose':
+                this.music.src = './src/assets/music/lose.mp3';
+                this.music.volume = 0.05;
+                break;
+        }
+        if(paused) this.music.play();
+    }
+
+    startMusic(e){
+        e.preventDefault();
+        if(this.music.paused){
+            document.getElementById('music-button').innerHTML = 'Chill Beats Off';
+            this.music.play();
+        }else{
+            document.getElementById('music-button').innerHTML = 'Chill Beats On';
+            this.music.pause();
+        }
+    }
+
+    startSounds(e){
+        e.preventDefault();
+        window.soundsOn = !window.soundsOn;
+        if(window.soundsOn){
+            document.getElementById('sounds-button').innerHTML = 'Sounds Off';
+        }else{
+            document.getElementById('sounds-button').innerHTML = 'Sounds On';
+        }
     }
 
     makeButton(){
+        const music = document.getElementById('music-button');
+        music.onclick = this.startMusic;
+        const sounds = document.getElementById('sounds-button');
+        sounds.onclick = this.startSounds;
+        const cheat = document.getElementById('cheat');
+        cheat.onclick = this.win;
+        const goBack = document.getElementById('back');
+        goBack.onclick = () => { 
+            if(this.wave > 1){
+                this.wave -= 2;
+                this.win()
+            }
+        };
         const fight = document.getElementById('start-fight-button');
         fight.onclick = this.board.startFight ;
         const button1 = document.getElementById('make-dog-button');
@@ -71,7 +133,7 @@ class Game{
                 break;
             case 'gibbon':
                 this.description.children[1].innerHTML = 'Gibbon';
-                this.description.children[2].innerHTML = 'Health: 50' + '&nbsp'.repeat(10) + 'Attack: 15';
+                this.description.children[2].innerHTML = 'Health: 50' + '&nbsp'.repeat(10) + 'Attack: 17';
                 this.description.children[3].innerHTML = 'Range: 2' + '&nbsp'.repeat(15) + 'Speed: 1';
                 this.description.children[4].innerHTML = 'Smacks foes from afar with lanky goodness. Slow and delicate though.';
                 break;
@@ -85,18 +147,18 @@ class Game{
                 this.description.children[1].innerHTML = 'Otter';
                 this.description.children[2].innerHTML = 'Health: 30' + '&nbsp'.repeat(10) + 'Attack: 20';
                 this.description.children[3].innerHTML = 'Range: 1' + '&nbsp'.repeat(15) + 'Speed: 4';
-                this.description.children[4].innerHTML = 'Fast and chaotic, the otter is hard to control. Tempting but pet, but dangerous nonetheless.';
+                this.description.children[4].innerHTML = 'Fast and chaotic, the otter is hard to control. Tempting to pet, but dangerous nonetheless.';
                 break;
             case 'llama':
                 this.description.children[1].innerHTML = 'Llama';
-                this.description.children[2].innerHTML = 'Health: 50' + '&nbsp'.repeat(10) + 'Attack: 13';
+                this.description.children[2].innerHTML = 'Health: 50' + '&nbsp'.repeat(10) + 'Attack: 10';
                 this.description.children[3].innerHTML = 'Range: 3' + '&nbsp'.repeat(15) + 'Speed: 2';
                 this.description.children[4].innerHTML = 'The Llama is fast and deadly, attacking from afar with spit. They are a bit stubborn though.';
                
                 break;
             case 'sal':
                 this.description.children[1].innerHTML = 'Salamander';
-                this.description.children[2].innerHTML = 'Health: 140' + '&nbsp'.repeat(10) + 'Attack: 3';
+                this.description.children[2].innerHTML = 'Health: 150' + '&nbsp'.repeat(10) + 'Attack: 3';
                 this.description.children[3].innerHTML = 'Range: 1' + '&nbsp'.repeat(15) + 'Speed: 1';
                 this.description.children[4].innerHTML = 'Low attack, but this animal can take a beating and keeps regenerating! Nice.';
                
@@ -129,33 +191,67 @@ class Game{
                 this.playerAmount = 4;
                 this.waveData = [['otter', [0,6]] , ['otter',[2,6]], ['otter',[4,6]], ['otter',[6,6]]];
                 break;
+            case 5:
+                this.playerAmount = 4;
+                this.waveData = [['chilla', [4,7]] , ['sal',[3,4]], ['gibbon',[4,5]], ['dog',[5,4]]];
+                break;
+            case 6:
+                this.playerAmount = 5;
+                this.waveData = [['llama', [0,5]] , ['llama',[1,5]], ['llama',[3,6]], ['llama',[4,7]],['llama',[2,7]]];
+                break;
+            case 7:
+                this.playerAmount = 5;
+                this.waveData = [['sal', [0,4]] , ['sal',[1,4]], ['sal',[2,4]], ['gibbon',[0,5]],['chilla',[0,7]]];
+                break;
+            default:
+                this.playerAmount = 10;
+                const newAnimals = []
+                for (let i = 0; i < 12; i++) {
+                    newAnimals.push(this.makeRandomAnimal());
+                }
+                this.waveData = newAnimals;
         }
         this.waveNumb.innerHTML = `Wave: ${this.wave}`
     }
 
+    makeRandomAnimal(){
+        const anim = [];
+        anim.push(this.animals[Math.floor(Math.random()*this.animals.length)]);
+        anim.push([Math.floor(Math.random()* 8), Math.floor(Math.random()* 4) + 4])
+        return anim;
+    }
+
     makeOverlay(win){
         const overlay = document.createElement('div');
+        const overlayBack = document.createElement('div');
+        overlayBack.id = 'overlayBack'
         overlay.id = 'overlay'
         const title = document.createElement('h2');
         const button = document.createElement('button');
-        if(win){
+        if(win){ 
+            this.changeMusic('win');
             title.innerHTML = 'You Won, Wowza ' + Math.round(Math.random() * 10000);
             button.innerHTML = 'Next Wave!';
             button.onclick = this.win;
   
         }else{
+            this.changeMusic('lose');
             title.innerHTML = 'You lost! Sad and disgraceful';
             button.innerHTML = 'Try Again!';
             button.onclick = this.lose;
         }
         overlay.appendChild(title);
         overlay.appendChild(button);
-        document.getElementById('board').appendChild(overlay);
+        document.getElementById('body').appendChild(overlayBack);
+        document.getElementById('body').appendChild(overlay);
     }
 
     win(){
-        this.baseMusic();
-        document.getElementById('overlay').remove();
+        this.changeMusic('base');
+        if(document.getElementById('overlay')){
+            document.getElementById('overlayBack').remove();
+            document.getElementById('overlay').remove();
+        }
         this.wave +=1;
         this.getWaveData();
         this.board.enemyBase = this.waveData;
@@ -163,8 +259,9 @@ class Game{
     }
 
     lose(){
-        this.baseMusic();
+        this.changeMusic('base');
         document.getElementById('overlay').remove();
+        document.getElementById('overlayBack').remove();
         this.board.makeWave( this.playerAmount);
     }
     

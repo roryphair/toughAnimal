@@ -2,7 +2,7 @@ import Unit from './unit';
 
 class Chilla extends Unit{
     constructor(board, pos, player){
-        super(board, pos, player)
+        super(board, pos, player, './src/assets/sounds/chilla.mp3')
         this.imgMove = './src/assets/units/chillaMove.png';
         this.imgBase = './src/assets/units/chillaStand.png';
         this.imgFight = './src/assets/units/chillaFight.png';

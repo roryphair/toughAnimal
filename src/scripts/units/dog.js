@@ -2,7 +2,8 @@ import Unit from './unit';
 
 class Dog extends Unit{
     constructor(board, pos, player){
-        super(board, pos, player)
+        super(board, pos, player, './src/assets/sounds/dog.mp3')
+        this.soundBase = './src/assets/sounds/dogBark.mp3'; 
         this.imgMove = './src/assets/units/dogMove.png';
         this.imgBase = './src/assets/units/dogStand.png';
         this.imgFight = './src/assets/units/dogFight.png';
@@ -10,6 +11,7 @@ class Dog extends Unit{
         this.range = 1;
         this.attack = 10;
         this.health = 100;
+        this.sound.volume = 0.2;
         this.unit.src = this.imgBase;
         this.healthBar.innerHTML = this.health;
     }

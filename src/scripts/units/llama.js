@@ -2,13 +2,13 @@ import Unit from './unit';
 
 class Llama extends Unit{
     constructor(board, pos, player){
-        super(board, pos, player)
+        super(board, pos, player, './src/assets/sounds/llama.mp3')
         this.imgMove = './src/assets/units/llamaMove.png';
         this.imgBase = './src/assets/units/llamaStand.png';
         this.imgFight = './src/assets/units/llamaFight.png';
         this.speed = 2;
         this.range = 3;
-        this.attack = 13;
+        this.attack = 10;
         this.health = 50;
         this.unit.src = this.imgBase;
         this.healthBar.innerHTML = this.health;

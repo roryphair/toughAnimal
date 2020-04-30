@@ -1,12 +1,13 @@
 class Unit {
-    constructor(board, pos, player){
+    constructor(board, pos, player, sound){
         this.player = player;
         this.board = board;
         this.spot = [0,0];
         this.dead = false;
         this.img = null;
         this.healthBar = null;
-        this.makeUnit(pos);
+        this.sound = null;
+        this.makeUnit(pos, sound);
         this.fight = false;
         if(player) this.dragElement(this.unit, this);
         this.move = this.move.bind(this);
@@ -139,6 +140,7 @@ class Unit {
     }
 
     attackTarget(){
+        if(window.soundsOn) this.sound.play();
         this.target.takeDamage(this.attack);
     }
 
@@ -152,9 +154,12 @@ class Unit {
         }
     }
 
-    makeUnit(pos){
+    makeUnit(pos, soundBase){
         const img = document.createElement('img');
         const healthBar = document.createElement('h2');
+        const sound = document.createElement('audio');
+        sound.src = soundBase;
+        sound.volume = 0.1;
         img.src = this.imgBase;
         healthBar.innerHTML = this.health;
         healthBar.className = 'health-bar';
@@ -171,7 +176,7 @@ class Unit {
                  j +=1
                  i =0;
                  if(j > 7){
-                     j = 0;
+                     j = 4;
                  }
              }
         }
@@ -180,9 +185,12 @@ class Unit {
         img.style.left = (j * 100) + 'px';
         this.board.grid[i][j] = this;
         this.healthBar = healthBar;
+        this.sound = sound;
+        img.appendChild(sound);
         document.getElementById('board').appendChild(img);
         document.getElementById('board').appendChild(healthBar);
         this.unit = img;
+        if(window.soundsOn && this.player) sound.play();
         this.setHealthBar();
     }
      

@@ -2,7 +2,7 @@ import Unit from './unit';
 
 class Goat extends Unit{
     constructor(board, pos, player){
-        super(board, pos, player)
+        super(board, pos, player, './src/assets/sounds/goat.mp3')
         this.imgMove = './src/assets/units/goatMove.png';
         this.imgBase = './src/assets/units/goatStand.png';
         this.imgFight = './src/assets/units/goatFight.png';

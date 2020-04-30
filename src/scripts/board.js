@@ -23,24 +23,36 @@ class Board {
         this.makeEnemyUnit = this.makeEnemyUnit.bind(this);
         this.startFight = this.startFight.bind(this);
         this.clearGrid = this.clearGrid.bind(this);
+        this.boardGlow = this.boardGlow.bind(this);
         this.totalUnits = document.getElementById('total-units')
         this.maxPlayer = 0;
+        this.timer = 0;
+        this.background = document.getElementById('board');
     }
 
     startFight(e){
         e.preventDefault();
         if(!this.waveStarted && this.playerUnits.length > 0){
-            this.game.fightMusic();
+            this.game.changeMusic('fight');
             this.fightButton.innerHTML = 'Reset!';
             this.waveStarted = true;
             this.clearGrid();
             this.playerUnits.forEach(player => player.startFight());
             this.enemyUnits.forEach(enemy => enemy.startFight());
+            requestAnimationFrame(this.boardGlow)
         }
         else if(this.waveStarted){
-            
-            this.game.baseMusic();
+            this.game.changeMusic('base');
             this.makeWave(this.maxPlayer);
+        }
+    }
+
+    boardGlow(){
+        this.timer += 1;
+        this.background.style.backgroundColor = `rgba(${ Math.sin(this.timer / 123) * 175}, ${Math.cos(this.timer/ 83) *50} , ${Math.sin(this.timer/ 203) * 255}, 0.7)`;
+        
+        if(this.waveStarted){
+            requestAnimationFrame(this.boardGlow);
         }
     }
 
