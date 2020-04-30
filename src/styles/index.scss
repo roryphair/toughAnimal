@@ -1,5 +1,38 @@
 h1, h2, h3, h4{
-    margin: 10px 0px;
+    margin: 5px 0px;
+}
+h1{
+    color: rgb(255, 255, 255);
+    font-size: 40px;
+    font-weight: bold;
+    font-family: monospace;
+    font-style: italic;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgb(0, 82, 7);
+    text-shadow: 5px 5px 10px rgb(0, 117, 20);
+}
+h2{
+    color: rgb(255, 255, 255);
+    font-size: 28px;
+    text-shadow: 3px 3px 4px rgb(70, 0, 49);
+}
+
+h3{
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+    text-shadow: 2px 2px 5px rgb(153, 6, 6);
+}
+
+h4{
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    text-shadow: 4px 4px 4px rgb(6, 0, 66);
+}
+p{
+        color: rgb(255, 255, 255);
+        font-size: 20px;
+        text-shadow: 4px 4px 4px rgb(6, 0, 66);
+    
 }
 .unit{
     position: absolute;
@@ -31,10 +64,15 @@ body{
     height: 100px
 }
 .health-bar{
+    user-select: none;
+    opacity: 85%;
     position: absolute;
     display: flex;
-    color: black;
-    z-index: 2;
+    color: rgb(255, 255, 255);
+    z-index: 1;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgb(0, 0, 0);
+    filter: drop-shadow(0px 0px 10px red);
 }
 #target{
     position: absolute;
@@ -76,7 +114,7 @@ body{
     background-size: contain;
     box-shadow: 0px 5px 10px rgb(255, 102, 0);
     border-radius: 20px;
-    background-color: rgba(1, 0, 53, 0.192);
+    background-color: rgba(255, 0, 0, 0.192);
     
 }
 .main-top h1{
@@ -90,8 +128,7 @@ body{
     font-style: italic;
     -webkit-text-stroke-width: 2px;
     -webkit-text-stroke-color: black;
-    text-shadow: 0px 6px 10px rgb(0, 0, 255);
-
+    text-shadow: 5px 5px 10px rgb(0, 0, 255);
 }
 .main-middle{
     display: flex;
@@ -101,22 +138,28 @@ body{
     min-width: 1500px;
 }
 .main-bottom{
+    width: 800px;
     display: flex;
     justify-content: center;
+    background-size: contain;
+    box-shadow: 0px 5px 10px rgb(255, 102, 0);
+    border-radius: 20px;
+    background-color: rgba(41, 0, 0, 0.534); 
 }
+
 .units-sidebar{ 
     box-sizing: border-box;
     padding: 10px;
     min-width: 300px;
     width: 300px;
     height: 800px;
-    border: black 2px solid;
+    border: rgba(255, 255, 255, 0.52) 1px solid;
     justify-content: space-between;
     align-items: center;
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    background: linear-gradient(90deg, rgb(187, 175, 255) 0%, rgb(170, 180, 255) 33%,rgb(166, 200, 255) 66%, rgb(167, 252, 255) 100%);
+    background: linear-gradient(90deg, rgba(95, 0, 0, 0.5) 0%, rgba(139, 0, 139, 0.6) 33%,rgba(74, 1, 133, 0.7) 66%, rgba(2, 158, 163, 0.8) 100%);
     box-shadow: salmon -10px 10px 20px;
 }
 .how-to-play{
@@ -128,7 +171,7 @@ body{
     height: 800px;
     border: black 2px solid;
     border-radius: 10px;
-    background: linear-gradient(90deg, rgb(167, 252, 255) 0%,rgb(166, 200, 255)  33%,rgb(170, 180, 255) 66%, rgb(187, 175, 255) 100%);
+    background: linear-gradient(90deg, rgba(2, 158, 163, 0.8)  0%, rgba(74, 1, 133, 0.7) 33%, rgba(139, 0, 139, 0.6)66%, rgba(95, 0, 0, 0.5) 100%);
     box-shadow: salmon 10px 10px 20px;
 }
 .board{
@@ -171,6 +214,8 @@ body{
 .add-image{
     height: 50px;
     width: 50px;
+    filter: drop-shadow(0px 0px 8px rgb(255, 255, 255));
+
 }
 #start-fight-button{
     cursor: pointer;
@@ -188,6 +233,9 @@ body{
     color: white;
 }
 #stats {
+    padding: 10px;
     width: 80%;
     height: 200px;
+    background-color: rgba(0, 0, 37, 0.459);
+    border-radius: 20px;
 }

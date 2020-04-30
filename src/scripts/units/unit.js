@@ -209,6 +209,7 @@ class Unit {
           pos4 = e.clientY;
           elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
           elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+          unit.setHealthBar()
             }
         }
       
@@ -249,7 +250,7 @@ class Unit {
     }
 
     setHealthBar(){
-        this.healthBar.style.top = (this.unit.offsetTop - 40) + 'px';
+        this.healthBar.style.top = (this.unit.offsetTop - 30) + 'px';
         this.healthBar.style.left = (this.unit.offsetLeft + 30) + 'px';
     }
 
