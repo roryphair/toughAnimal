@@ -30,7 +30,7 @@ class Board {
     startFight(e){
         e.preventDefault();
         if(!this.waveStarted && this.playerUnits.length > 0){
-            
+            this.game.fightMusic();
             this.fightButton.innerHTML = 'Reset!';
             this.waveStarted = true;
             this.clearGrid();
@@ -38,6 +38,8 @@ class Board {
             this.enemyUnits.forEach(enemy => enemy.startFight());
         }
         else if(this.waveStarted){
+            
+            this.game.baseMusic();
             this.makeWave(this.maxPlayer);
         }
     }

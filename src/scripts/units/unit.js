@@ -99,7 +99,6 @@ class Unit {
                 let y = this.unit.offsetTop - this.target.unit.offsetTop;
                 let x = this.unit.offsetLeft - this.target.unit.offsetLeft;
                 const h =  Math.sqrt(x**2 + y**2);
-                
                 if(h > (this.range * 130)){
                     x = x /h;
                     y = y/h;

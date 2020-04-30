@@ -3,6 +3,11 @@ class Game{
     constructor(){
         this.playerUnits = [];
         this.enemyUnits = [];
+        const music = document.createElement("audio")
+        document.getElementById('board').append(music);
+        this.music = music;
+        this.music.loop = true;
+        this.music.volume = 0.1;
         this.board = new Board(this.playerUnits, this.enemyUnits, this);
         this.makeButton();
         this.wave = 1;
@@ -16,6 +21,16 @@ class Game{
         this.board.makeWave(this.playerAmount);
         this.win = this.win.bind(this);
         this.lose = this.lose.bind(this);
+        this.baseMusic()
+    }
+
+    fightMusic(){
+        this.music.src = './src/assets/music/fight.mp3';
+        this.music.play();
+    }
+    baseMusic(){
+        this.music.src = './src/assets/music/prepare.mp3';
+        this.music.play();
     }
 
     makeButton(){
@@ -139,6 +154,7 @@ class Game{
     }
 
     win(){
+        this.baseMusic();
         document.getElementById('overlay').remove();
         this.wave +=1;
         this.getWaveData();
@@ -147,6 +163,7 @@ class Game{
     }
 
     lose(){
+        this.baseMusic();
         document.getElementById('overlay').remove();
         this.board.makeWave( this.playerAmount);
     }

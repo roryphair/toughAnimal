@@ -163,6 +163,8 @@ body{
     box-shadow: salmon -10px 10px 20px;
 }
 .how-to-play{
+    box-sizing: border-box;
+    padding: 20px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -181,9 +183,9 @@ body{
     height: 800px;
     border: black 2px solid;
     margin: 0px 20px;
-    background-color: rgba(136, 2, 214, 0.5);
-    background-image: url('../assets/other/background.jpg');
-    background-size: 800px 800px;
+    background-color: rgba(2, 164, 214, 0.5);
+    background-image: url('../assets/other/back4.jpg');
+    background-size: 100%;
     border-radius: 10px;
     background-blend-mode: exclusion;
     filter: drop-shadow(0px 0px 30px rgb(0, 204, 255));
