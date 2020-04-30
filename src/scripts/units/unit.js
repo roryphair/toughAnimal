@@ -109,8 +109,8 @@ class Unit {
                     this.setHealthBar();
                 }
                 else{
-                    x = 0;
-                    y = 0;
+                    x = (Math.random()-0.5);
+                    y = (Math.random()-0.5);
                     if(this.attackCooldown > 90){
                         this.attackTarget()
                         this.changeImg(this.imgFight, true);

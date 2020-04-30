@@ -11,9 +11,11 @@ class Board {
         this.game = game;
         this.playerUnits = playerUnits;
         this.enemyUnits = enemyUnits;
+        this.enemyBase = [];
         this.grid = [];
         this.squares = [];
         this.waveStarted = false;
+        this.fightButton = document.getElementById('start-fight-button');
         this.resetGrid(8);
         this.parent = document.getElementById('board');
         this.buildGrid();
@@ -27,11 +29,16 @@ class Board {
 
     startFight(e){
         e.preventDefault();
-        if(!this.waveStarted){
+        if(!this.waveStarted && this.playerUnits.length > 0){
+            
+            this.fightButton.innerHTML = 'Reset!';
             this.waveStarted = true;
             this.clearGrid();
             this.playerUnits.forEach(player => player.startFight());
             this.enemyUnits.forEach(enemy => enemy.startFight());
+        }
+        else if(this.waveStarted){
+            this.makeWave(this.maxPlayer);
         }
     }
 
@@ -51,7 +58,9 @@ class Board {
         });
     }
 
-    makeWave(enemies, playerAmount){
+    makeWave( playerAmount){
+        this.fightButton.innerHTML = 'Start Fight';
+        this.waveStarted = false;
         this.setGrid();
         this.maxPlayer = playerAmount;
         this.enemyUnits.forEach( (enemy) => {
@@ -60,7 +69,7 @@ class Board {
         this.playerUnits.forEach( (player) => {
             player.deleteSelf();
         })
-        enemies.forEach(enemy => {
+        this.enemyBase.forEach(enemy => {
             this.makeEnemyUnit(enemy[0], enemy[1]);
         });
         

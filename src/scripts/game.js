@@ -12,7 +12,8 @@ class Game{
         this.description = document.getElementById('stats');
         this.fillDescription = this.fillDescription.bind(this);
         this.getWaveData();
-        this.board.makeWave(this.waveData, this.playerAmount);
+        this.board.enemyBase = this.waveData;
+        this.board.makeWave(this.playerAmount);
         this.win = this.win.bind(this);
         this.lose = this.lose.bind(this);
     }
@@ -123,7 +124,7 @@ class Game{
         const title = document.createElement('h2');
         const button = document.createElement('button');
         if(win){
-            title.innerHTML = 'You Won, Wowza ' + Math.random() * 10000;
+            title.innerHTML = 'You Won, Wowza ' + Math.round(Math.random() * 10000);
             button.innerHTML = 'Next Wave!';
             button.onclick = this.win;
   
@@ -141,12 +142,13 @@ class Game{
         document.getElementById('overlay').remove();
         this.wave +=1;
         this.getWaveData();
-        this.board.makeWave(this.waveData, this.playerAmount);
+        this.board.enemyBase = this.waveData;
+        this.board.makeWave(this.playerAmount);
     }
 
     lose(){
         document.getElementById('overlay').remove();
-        this.board.makeWave(this.waveData, this.playerAmount);
+        this.board.makeWave( this.playerAmount);
     }
     
 }

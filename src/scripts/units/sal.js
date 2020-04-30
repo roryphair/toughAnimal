@@ -18,7 +18,6 @@ class Sal extends Unit{
         if(this.timer % 30 ===0){
             this.health += 1;
             this.healthBar.innerHTML = this.health;
-            this.changeImg(this.imgFight , true);
         }
         return [0,0]
     }

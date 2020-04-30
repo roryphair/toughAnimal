@@ -32,14 +32,14 @@ class Chilla extends Unit{
     }
 
     specialMovement(){
-        if(this.timer % 30 ===0){
+        if(this.timer % 150 ===0){
             const allies = this.player ? this.board.playerUnits : this.board.enemyUnits;
             allies.forEach(ally => {
-                ally.health += 1;
+                ally.health += 5;
                 ally.healthBar.innerHTML =  ally.health;
             });
             this.specialMove = [(Math.random() - .5 )*8, (Math.random() - .5 )*8];
-            this.changeImg(this.imgFight);
+            this.changeImg(this.imgFight, true);
         }
         return this.specialMove;
     }

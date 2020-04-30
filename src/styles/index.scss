@@ -12,6 +12,10 @@ h1, h2, h3, h4{
 }
 html{
     background: radial-gradient(circle, rgb(255, 3, 3) 0%, rgb(0, 0, 0) 100%);
+    background-color: rgb(50, 0, 78);
+    background-image: url('../assets/other/back2.jpg');
+    background-blend-mode: difference;
+    background-size: cover;
 }
 body{
     margin: 0px;
@@ -50,10 +54,10 @@ body{
 }
 
 .board-square-player {
-    border: rgba(0, 0, 255, 0.479) 1px dashed;
+    box-shadow: rgba(0, 0, 255, 0.726) 0px 0px 10px;
 }
 .board-square-enemy {
-    border: rgba(255, 0, 0, 0.418) 1px dotted;
+    box-shadow: rgba(255, 0, 0, 0.726) 0px 0px 10px;
     background-color: rgba(0, 0, 0, 0.20);
 }
 .main{
@@ -63,6 +67,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 }
 .main-top{
     width: 800px;
@@ -133,9 +138,11 @@ body{
     height: 800px;
     border: black 2px solid;
     margin: 0px 20px;
+    background-color: rgba(136, 2, 214, 0.5);
     background-image: url('../assets/other/background.jpg');
     background-size: 800px 800px;
     border-radius: 10px;
+    background-blend-mode: exclusion;
     filter: drop-shadow(0px 0px 30px rgb(0, 204, 255));
 }
 
