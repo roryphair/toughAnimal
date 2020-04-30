@@ -7,6 +7,7 @@ class Dog extends Unit{
         this.imgMove = './src/assets/units/dogMove.png';
         this.imgBase = './src/assets/units/dogStand.png';
         this.imgFight = './src/assets/units/dogFight.png';
+        this.attackImg ='./src/assets/units/dogAttack.png';
         this.speed = 2;
         this.range = 1;
         this.attack = 10;
@@ -14,6 +15,15 @@ class Dog extends Unit{
         this.sound.volume = 0.2;
         this.unit.src = this.imgBase;
         this.healthBar.innerHTML = this.health;
+        this.attackTimer = 0;
+        this.attackMade = null;
+        
+    }
+
+    moveAttack(){
+        super.moveAttack();
+        this.attackMade.style.top = this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 2) + 'px'; 
+        this.attackMade.style.left = this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 2) + 'px'; 
     }
 
 }

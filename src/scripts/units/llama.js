@@ -6,6 +6,7 @@ class Llama extends Unit{
         this.imgMove = './src/assets/units/llamaMove.png';
         this.imgBase = './src/assets/units/llamaStand.png';
         this.imgFight = './src/assets/units/llamaFight.png';
+        this.attackImg ='./src/assets/units/llamaAttack.png';
         this.speed = 2;
         this.range = 3;
         this.attack = 10;
@@ -51,6 +52,13 @@ class Llama extends Unit{
         }
         return this.specialMove;
     }
+
+    moveAttack(){
+        super.moveAttack();
+        this.attackMade.style.top = this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 5) + 'px'; 
+        this.attackMade.style.left = this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 5) + 'px'; 
+    }
+
 }
 
 export default Llama;

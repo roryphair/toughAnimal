@@ -4,7 +4,6 @@ class Unit {
         this.board = board;
         this.spot = [0,0];
         this.dead = false;
-        this.img = null;
         this.healthBar = null;
         this.sound = null;
         this.makeUnit(pos, sound);
@@ -15,6 +14,12 @@ class Unit {
         this.attackCooldown = 0;
         this.timer = 0;
         this.imgChange = -35;
+        this.dieSound = './src/assets/sounds/die.mp3';
+        this.attackImg ='./src/assets/units/dogAttack.png';
+        this.attackTimer = 0;
+        this.attackMade = null;
+        this.moveAttack = this.moveAttack.bind(this);
+        this.attackDirection = 0;
     }
 
     startFight(){
@@ -90,49 +95,59 @@ class Unit {
     }
 
     move(){
-        if(this.fight && !this.dead){
-            this.timer += 1;
-            const nudge = this.checkCollision();
-            const topNudge = nudge[0];
-            const leftNudge = nudge[1];
-            if(this.target && !this.target.dead){
-                this.attackCooldown += 1;
-                let y = this.unit.offsetTop - this.target.unit.offsetTop;
-                let x = this.unit.offsetLeft - this.target.unit.offsetLeft;
-                const h =  Math.sqrt(x**2 + y**2);
-                if(h > (this.range * 130)){
-                    x = x /h;
-                    y = y/h;
-                    x < 0 ? this.unit.style.transform = 'scaleX(1)' : this.unit.style.transform = 'scaleX(-1)';
-
-                    this.changeImg(this.imgMove);
-                    this.setHealthBar();
-                }
-                else{
-                    x = (Math.random()-0.5);
-                    y = (Math.random()-0.5);
-                    if(this.attackCooldown > 90){
-                        this.attackTarget()
-                        this.changeImg(this.imgFight, true);
-                        this.attackCooldown= 0;
-                    }
-                    else{   
-                        this.changeImg( this.imgBase);
-                    }
-                    
-                }
-                const special = this.specialMovement();
-                this.unit.style.top = (this.unit.offsetTop - topNudge - this.speed * y + special[0]) + "px";
-                this.unit.style.left = (this.unit.offsetLeft - leftNudge - this.speed * x + special[1] ) + "px";
-                this.setHealthBar();
-                requestAnimationFrame(this.move)
-            } else{
-                this.getTarget();
-                requestAnimationFrame(this.move)
-            }
+        if(this.dead){
+            this.timer +=1
+            this.unit.style.opacity = `${100 - this.timer*2}%`;
+            if(this.timer > 50){
+                this.deleteSelf();
+            }else{
+                requestAnimationFrame(this.move);
+            } 
         }else{
-            this.changeImg( this.imgBase);
-        }
+            if(this.fight && !this.dead){
+                this.timer += 1;
+                const nudge = this.checkCollision();
+                const topNudge = nudge[0];
+                const leftNudge = nudge[1];
+                if(this.target && !this.target.dead){
+                    this.attackCooldown += 1;
+                    let y = this.unit.offsetTop - this.target.unit.offsetTop;
+                    let x = this.unit.offsetLeft - this.target.unit.offsetLeft;
+                    const h =  Math.sqrt(x**2 + y**2);
+                    if(h > (this.range * 130)){
+                        x = x /h;
+                        y = y/h;
+                        x < 0 ? this.unit.style.transform = 'scaleX(1)' : this.unit.style.transform = 'scaleX(-1)';
+
+                        this.changeImg(this.imgMove);
+                        this.setHealthBar();
+                    }
+                    else{
+                        x = (Math.random()-0.5);
+                        y = (Math.random()-0.5);
+                        if(this.attackCooldown > 90){
+                            this.attackTarget()
+                            this.changeImg(this.imgFight, true);
+                            this.attackCooldown= 0;
+                        }
+                        else{   
+                            this.changeImg( this.imgBase);
+                        }
+                        
+                    }
+                    const special = this.specialMovement();
+                    this.unit.style.top = (this.unit.offsetTop - topNudge - this.speed * y + special[0]) + "px";
+                    this.unit.style.left = (this.unit.offsetLeft - leftNudge - this.speed * x + special[1] ) + "px";
+                    this.setHealthBar();
+                    requestAnimationFrame(this.move)
+                } else{
+                    this.getTarget();
+                    requestAnimationFrame(this.move)
+                }
+            }else{
+                this.changeImg( this.imgBase);
+            }
+    }
     }
 
     specialMovement(){
@@ -141,7 +156,43 @@ class Unit {
 
     attackTarget(){
         if(window.soundsOn) this.sound.play();
+        this.createAttack();
         this.target.takeDamage(this.attack);
+    }
+
+      
+    createAttack(){
+        this.attackTimer = 0;
+        const attack = document.createElement('img');
+        attack.className = this.player ? 'player-attack ' : 'enemy-attack';
+        attack.src = this.attackImg;
+        let y = this.unit.offsetTop - this.target.unit.offsetTop;
+        let x = this.unit.offsetLeft - this.target.unit.offsetLeft;
+        let deg = Math.atan2( y,x);
+        this.attackDirection = deg;
+        attack.style.top = (this.unit.offsetTop - (Math.sin(deg)*40)) + 'px';
+        attack.style.left = (this.unit.offsetLeft - (Math.cos(deg)*40)) + 'px';
+        deg = deg * (180 / Math.PI) - 90;
+        attack.style.transform=  `rotate(${deg}deg)`;
+        this.attackMade = attack;
+        this.attackMade.style.opacity = 0;
+        this.board.background.append(attack);
+        requestAnimationFrame(this.moveAttack)
+    }
+
+    moveAttack(){
+        this.attackTimer +=1
+        if(this.attackTimer > 45){
+            this.attackMade.remove();
+        }
+        else{
+            requestAnimationFrame(this.moveAttack)
+            if(this.attackTimer < 5){
+                this.attackMade.style.opacity = (20 * this.attackTimer) + '%';
+            }else if (this.attackTimer > 40 ){
+                this.attackMade.style.opacity = (100 - (20 * (this.attackTimer-40))) + '%';
+            }
+        }
     }
 
     takeDamage(amount){
@@ -149,7 +200,13 @@ class Unit {
             this.health -= amount;
             this.healthBar.innerHTML = this.health;
             if(this.health <= 0){
-                this.deleteSelf()
+                if(window.soundsOn) {
+                    this.sound.volume = 0.1;
+                    this.sound.src= this.dieSound;
+                    this.sound.play()};
+                this.healthBar.innerHTML = '';
+                this.dead = true;
+                this.timer = 0;
             }
         }
     }
@@ -264,6 +321,7 @@ class Unit {
     deleteSelf(){
         this.dead = true;
         this.board.deleteUnit(this , this.player);
+        this.sound.remove();
         this.unit.remove();
         this.healthBar.remove();
     }

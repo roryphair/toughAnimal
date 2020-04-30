@@ -6,6 +6,7 @@ class Goat extends Unit{
         this.imgMove = './src/assets/units/goatMove.png';
         this.imgBase = './src/assets/units/goatStand.png';
         this.imgFight = './src/assets/units/goatFight.png';
+        this.attackImg ='./src/assets/units/goatAttack.png';
         this.speed = 2;
         this.range = 1.3;
         this.attack = 15;
@@ -42,6 +43,13 @@ class Goat extends Unit{
         this.setCords();
         super.startFight();
     }
+
+    moveAttack(){
+        super.moveAttack();
+        this.attackMade.style.top = this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 2) + 'px'; 
+        this.attackMade.style.left = this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 2) + 'px'; 
+    }
+
 
 }
 

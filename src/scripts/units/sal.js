@@ -6,6 +6,7 @@ class Sal extends Unit{
         this.imgMove = './src/assets/units/salMove.png';
         this.imgBase = './src/assets/units/salStand.png';
         this.imgFight = './src/assets/units/salFight.png';
+        this.attackImg ='./src/assets/units/salAttack.png';
         this.speed = 1;
         this.range = 1;
         this.attack = 3;
@@ -21,6 +22,11 @@ class Sal extends Unit{
             this.healthBar.innerHTML = this.health;
         }
         return [0,0]
+    }
+    moveAttack(){
+        super.moveAttack();
+        this.attackMade.style.top = this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 1.5) + 'px'; 
+        this.attackMade.style.left = this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 1.5) + 'px'; 
     }
 }
 

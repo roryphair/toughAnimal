@@ -6,6 +6,7 @@ class Otter extends Unit{
         this.imgMove = './src/assets/units/otterMove.png';
         this.imgBase = './src/assets/units/otterStand.png';
         this.imgFight = './src/assets/units/otterFight.png';
+        this.attackImg ='./src/assets/units/otterAttack.png';
         this.speed = 4;
         this.range = 1;
         this.attack = 20;
@@ -26,11 +27,15 @@ class Otter extends Unit{
     }
 
     attackTarget(){
-        if(window.soundsOn) this.sound.play();
-        this.target.takeDamage(this.attack);
+        super.attackTarget();
         this.getTarget();
     }
 
+    moveAttack(){
+        super.moveAttack();
+        this.attackMade.style.top = this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 2) + 'px'; 
+        this.attackMade.style.left = this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 2) + 'px'; 
+    }
 
 }
 

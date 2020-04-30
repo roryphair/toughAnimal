@@ -93,6 +93,7 @@ class Board {
     setPlayerTotal(){
         this.totalUnits.innerHTML = 'Animals Left: ' +  (this.maxPlayer - this.playerUnits.length);
     }
+  
 
     resetGrid(n){
         const newGrid = [];
@@ -142,7 +143,7 @@ class Board {
     
     makeUnit(unitName){
         return e => {
-            if(this.playerUnits.length < this.maxPlayer){
+            if(!this.waveStarted && (this.playerUnits.length < this.maxPlayer)){
                 e.preventDefault();
                 let Unit;
                 switch(unitName){

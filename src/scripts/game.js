@@ -33,7 +33,7 @@ class Game{
 
     backgroundChange(){
         this.timer += 1;
-        this.background.style.backgroundColor = `rgba(${ Math.sin(this.timer / 345) * 125}, 0 , ${Math.sin(this.timer/ 234) * 255}, 0.7)`;
+        this.background.style.backgroundColor = `rgba(${Math.abs(Math.sin(this.timer / 345) * 125)}, 0 , ${Math.abs(Math.sin(this.timer/ 234) * 255)}, 0.7)`;
         requestAnimationFrame(this.backgroundChange);
     
     }
@@ -43,19 +43,19 @@ class Game{
         switch(song){
             case 'fight':
                 this.music.src = './src/assets/music/fight.mp3';
-                this.music.volume = 0.15;
+                this.music.volume = 0.2;
                 break;
             case 'base':
                 this.music.src = './src/assets/music/prepare.mp3';
-                this.music.volume = 0.1;
+                this.music.volume = 0.15;
                 break;
             case 'win':
                 this.music.src = './src/assets/music/win.mp3';
-                this.music.volume = 0.05;
+                this.music.volume = 0.1;
                 break;
             case 'lose':
                 this.music.src = './src/assets/music/lose.mp3';
-                this.music.volume = 0.05;
+                this.music.volume = 0.1;
                 break;
         }
         if(paused) this.music.play();
@@ -76,9 +76,9 @@ class Game{
         e.preventDefault();
         window.soundsOn = !window.soundsOn;
         if(window.soundsOn){
-            document.getElementById('sounds-button').innerHTML = 'Sounds Off';
+            document.getElementById('sounds-button').innerHTML = 'Squawks Off';
         }else{
-            document.getElementById('sounds-button').innerHTML = 'Sounds On';
+            document.getElementById('sounds-button').innerHTML = 'Squawks On';
         }
     }
 
@@ -202,6 +202,38 @@ class Game{
             case 7:
                 this.playerAmount = 5;
                 this.waveData = [['sal', [0,4]] , ['sal',[1,4]], ['sal',[2,4]], ['gibbon',[0,5]],['chilla',[0,7]]];
+                break;
+            case 8:
+                this.playerAmount = 6;
+                this.waveData = [['dog', [1,4]] , ['dog',[2,4]], ['dog',[3,4]], ['dog',[4,4]],['dog',[5,4]],['dog',[6,4]]];
+                break;
+            case 9:
+                this.playerAmount = 6;
+                this.waveData = [['goat', [2,7]] , ['goat',[5,6]], ['sal',[4,4]], ['llama',[2,6]], ['gibbon',[4,6]], ['chilla',[7,7]]];
+                break;
+            case 10:
+                this.playerAmount = 7;
+                this.waveData = [['chilla', [0,7]] , ['chilla',[7,7]], ['otter',[2,7]], ['otter',[3,7]], ['otter',[4,7]], ['sal',[2,4]], ['sal',[5,4]]];
+                break;
+            case 11:
+                this.playerAmount = 7;
+                this.waveData = [['gibbon', [5,5]] , ['gibbon',[4,5]], ['gibbon',[3,5]], ['otter',[7,6]], ['sal',[4,4]], ['sal',[4,6]], ['otter',[0,6]], ['chilla',[0,7]]];
+                break;
+            case 12:
+                this.playerAmount = 8;
+                this.waveData = [['dog', [0,4]] , ['dog',[2,4]], ['dog',[4,4]], ['dog',[6,4]], ['otter',[1,5]], ['otter',[3,5]], ['otter',[5,5]], ['llama',[4,6]],['llama',[2,6]]];
+                break;
+            case 13:
+                this.playerAmount = 8;
+                this.waveData = [['otter', [0,7]] , ['otter',[1,7]], ['otter',[2,7]], ['otter',[3,7]], ['otter',[4,7]], ['otter',[5,7]], ['otter',[6,7]], ['otter',[7,7]],['otter',[4,6]],['otter',[3,6]]];
+                break;
+            case 14:
+                this.playerAmount = 9;
+                this.waveData = [['sal', [2,4]] , ['sal',[5,4]], ['dog',[3,4]], ['gibbon',[4,6]], ['chilla',[4,7]], ['otter',[5,5]], ['llama',[6,6]], ['llama',[1,6]],['goat',[6,6]]];
+                break;
+            case 15:
+                this.playerAmount = 9;
+                this.waveData = [['chilla', [0,7]] , ['chilla',[3,7]], ['chilla',[4,7]], ['chilla',[7,7]], ['dog',[4,4]], ['dog',[3,4]], ['dog',[2,4]], ['dog',[5,4]],['dog',[1,4]],['dog',[6,4]]];
                 break;
             default:
                 this.playerAmount = 10;

@@ -41,8 +41,29 @@ p{
     width: 100px;
     height: 100px;
     z-index: 1;
-    
 }
+.player-attack{
+    position: absolute;
+    display: flex;
+    top:20px;
+    left: 20px;
+    width: 90px;
+    height: 90px;
+    z-index: 2;
+    filter: drop-shadow(0px 0px 10px blue);
+}
+
+.enemy-attack{
+    position: absolute;
+    display: flex;
+    top:20px;
+    left: 20px;
+    width: 90px;
+    height: 90px;
+    z-index: 2;
+    filter: drop-shadow(0px 0px 10px rgb(255, 0, 0));
+}
+
 html{
     background: radial-gradient(circle, rgb(255, 3, 3) 0%, rgb(0, 0, 0) 100%);
     background-color: rgb(50, 0, 78);
@@ -263,7 +284,6 @@ button{
     font-size: 24px;
     padding: 10px;
     width: 200px;
-
 }
 button:hover{
     background-color: royalblue;

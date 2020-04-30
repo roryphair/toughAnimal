@@ -6,6 +6,7 @@ class Chilla extends Unit{
         this.imgMove = './src/assets/units/chillaMove.png';
         this.imgBase = './src/assets/units/chillaStand.png';
         this.imgFight = './src/assets/units/chillaFight.png';
+        this.attackImg ='./src/assets/units/chillaAttack.png';
         this.speed = 0;
         this.range = 1;
         this.attack = 1;
@@ -42,6 +43,12 @@ class Chilla extends Unit{
             this.changeImg(this.imgFight, true);
         }
         return this.specialMove;
+    }
+
+    moveAttack(){
+        super.moveAttack();
+        this.attackMade.style.top = this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 1) + 'px'; 
+        this.attackMade.style.left = this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 1) + 'px'; 
     }
 }
 
