@@ -37,6 +37,7 @@ class Board {
         if(!this.waveStarted && this.playerUnits.length > 0){
             this.game.changeMusic('fight');
             this.fightButton.innerHTML = 'Reset!';
+            this.fightButton.className = 'button-on';
             this.waveStarted = true;
             this.clearGrid();
             this.bothUnits = this.playerUnits.concat(this.enemyUnits);
@@ -77,6 +78,7 @@ class Board {
 
     makeWave( playerAmount){
         this.fightButton.innerHTML = 'Start Fight';
+        this.fightButton.className = '';
         this.waveStarted = false;
         this.maxPlayer = playerAmount;
         this.enemyUnits.forEach(enemy => enemy.removeSelf());

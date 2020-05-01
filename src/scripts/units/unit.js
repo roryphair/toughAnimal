@@ -12,7 +12,7 @@ class Unit {
         this.move = this.move.bind(this);
         this.target = null;
         this.attackCooldown = 0;
-        this.timer = 0;
+        this.timer = Math.floor( Math.random() * 100);
         this.imgChange = -35;
         this.dieSound = './src/assets/sounds/die.mp3';
         this.attackImg ='./src/assets/units/dogAttack.png';
@@ -20,6 +20,24 @@ class Unit {
         this.attackMade = null;
         this.moveAttack = this.moveAttack.bind(this);
         this.attackDirection = 0;
+        this.wiggle = this.wiggle.bind(this);
+        requestAnimationFrame(this.wiggle);
+    }
+
+    wiggle(){
+        if(!this.dead && !this.fight){
+            this.timer +=1;
+            const numb = Math.sin(this.timer/15) * 10;
+            const numb2 = Math.sin(this.timer/ 12)/22;
+            const numb3 = Math.sin(this.timer/ 9)/27;
+            this.unit.style.transform = `rotate(${numb}deg) scaleX(${1 + numb2}) scaleY(${1 + numb3})`;
+
+            requestAnimationFrame(this.wiggle)
+        }
+        else{
+            this.timer = 0;
+            this.unit.style.transform = ``;
+        }
     }
 
     startFight(){
@@ -119,7 +137,7 @@ class Unit {
                         y = y/h;
                         x < 0 ? this.unit.style.transform = 'scaleX(1)' : this.unit.style.transform = 'scaleX(-1)';
 
-                        this.changeImg(this.imgMove);
+                        this.changeImg(this.imgMove,true);
                         this.setHealthBar();
                     }
                     else{

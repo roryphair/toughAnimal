@@ -19,6 +19,7 @@ class Game{
         this.lose = this.lose.bind(this);
         this.startMusic = this.startMusic.bind(this);
         this.startSounds = this.startSounds.bind(this);
+        this.changeMusic = this.changeMusic.bind(this);
         this.makeButton();
         this.changeMusic('base');
         this.timer = 0;
@@ -39,6 +40,10 @@ class Game{
     changeMusic(song){
         const paused = !this.music.paused;
         switch(song){
+            case 'night':
+                this.music.src = './src/assets/music/nightnight.mp3';
+                this.music.volume = 0.2;
+                break;
             case 'fight':
                 this.music.src = './src/assets/music/fight.mp3';
                 this.music.volume = 0.2;
@@ -61,11 +66,14 @@ class Game{
 
     startMusic(e){
         e.preventDefault();
+        const button = document.getElementById('music-button');
         if(this.music.paused){
-            document.getElementById('music-button').innerHTML = 'Chill Beats Off';
+            button.innerHTML = 'Chill Beats On';
+            button.className ='button-on';
             this.music.play();
         }else{
-            document.getElementById('music-button').innerHTML = 'Chill Beats On';
+            button.innerHTML = 'Chill Beats Off';
+            button.className ='';
             this.music.pause();
         }
     }
@@ -73,10 +81,13 @@ class Game{
     startSounds(e){
         e.preventDefault();
         window.soundsOn = !window.soundsOn;
+        const button = document.getElementById('sounds-button');
         if(window.soundsOn){
-            document.getElementById('sounds-button').innerHTML = 'Squawks Off';
+            button.innerHTML = 'Squawks Off';
+            button.className ='button-on';
         }else{
-            document.getElementById('sounds-button').innerHTML = 'Squawks On';
+            button.innerHTML = 'Squawks On';
+            button.className ='';
         }
     }
 
@@ -87,6 +98,13 @@ class Game{
         sounds.onclick = this.startSounds;
         const cheat = document.getElementById('cheat');
         cheat.onclick = this.win;
+        const night = document.getElementById('rory');
+        night.onclick = () => {
+            this.changeMusic('night')
+            this.board.playerUnits.forEach(unit => {
+                unit.changeImg( './src/assets/units/jae.png' , true);
+            })
+        };
         const goBack = document.getElementById('back');
         goBack.onclick = () => { 
             if(this.wave > 1){
@@ -144,14 +162,14 @@ class Game{
             case 'otter':
                 this.description.children[1].innerHTML = 'Otter';
                 this.description.children[2].innerHTML = 'Health: 30' + '&nbsp'.repeat(10) + 'Attack: 20';
-                this.description.children[3].innerHTML = 'Range: 1' + '&nbsp'.repeat(15) + 'Speed: 4';
+                this.description.children[3].innerHTML = 'Range: 1.2' + '&nbsp'.repeat(15) + 'Speed: 4';
                 this.description.children[4].innerHTML = 'Fast and chaotic, the otter is hard to control. Tempting to pet, but dangerous nonetheless.';
                 break;
             case 'llama':
                 this.description.children[1].innerHTML = 'Llama';
-                this.description.children[2].innerHTML = 'Health: 50' + '&nbsp'.repeat(10) + 'Attack: 10';
+                this.description.children[2].innerHTML = 'Health: 65' + '&nbsp'.repeat(10) + 'Attack: 10';
                 this.description.children[3].innerHTML = 'Range: 3' + '&nbsp'.repeat(15) + 'Speed: 2';
-                this.description.children[4].innerHTML = 'The Llama is fast and deadly, attacking from afar with spit. They are a bit stubborn though.';
+                this.description.children[4].innerHTML = 'The Llama is fast and elegant, attacking from afar with spit. They are a bit stubborn though.';
                
                 break;
             case 'sal':
@@ -233,10 +251,30 @@ class Game{
                 this.playerAmount = 9;
                 this.waveData = [['chilla', [0,7]] , ['chilla',[3,7]], ['chilla',[4,7]], ['chilla',[7,7]], ['dog',[4,4]], ['dog',[3,4]], ['dog',[2,4]], ['dog',[5,4]],['dog',[1,4]],['dog',[6,4]]];
                 break;
-            default:
+            case 16:
+                this.playerAmount = 9;
+                this.waveData = [['dog', [0,7]] , ['dog',[3,7]], ['dog',[4,7]], ['dog',[7,7]], ['dog',[1,7]], ['dog',[2,7]], ['dog',[5,7]], ['dog',[6,7]],['sal',[1,4]],['sal',[6,4]]];
+                break;
+            case 17:
                 this.playerAmount = 10;
+                this.waveData = [['dog', [1,4]] , ['dog',[6,4]], ['sal',[4,4]], ['sal',[3,4]], ['goat',[1,7]], ['goat',[6,7]], ['chilla',[5,6]], ['gibbon',[6,5]],['llama',[1,6]],['llama',[6,5]]];
+                break;
+            case 18:
+                this.playerAmount = 10;
+                this.waveData = [['chilla', [6,6]] , ['chilla',[2,7]], ['chilla',[0,7]], ['sal',[2,4]],['sal',[6,4]], ['otter',[1,7]], ['otter',[6,7]], ['otter',[5,6]], ['otter',[6,5]],['otter',[1,6]],['otter',[6,5]]];
+                break;
+            case 19:
+                this.playerAmount = 10;
+                this.waveData = [['goat', [0,7]] , ['goat',[7,7]], ['goat',[6,6]], ['goat',[1,6]],['dog',[5,4]], ['dog',[2,4]], ['gibbon',[5,5]], ['gibbon',[2,5]], ['llama',[3,6]],['llama',[4,6]],['otter',[4,7]]];
+                break;
+            case 20:
+                this.playerAmount = 11;
+                this.waveData = [['chilla', [7,7]] , ['chilla', [0,7]] , ['goat',[1,7]], ['goat',[6,7]], ['dog',[4,4]],['dog',[3,4]], ['llama',[3,7]], ['llama',[5,5]], ['llama',[2,5]], ['llama',[3,6]],['llama',[4,6]],['llama',[4,7]]];
+                break;
+            default:
+                this.playerAmount = 12;
                 const newAnimals = []
-                for (let i = 0; i < 12; i++) {
+                for (let i = 0; i < 14; i++) {
                     newAnimals.push(this.makeRandomAnimal());
                 }
                 this.waveData = newAnimals;

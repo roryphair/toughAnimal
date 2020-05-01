@@ -10,7 +10,7 @@ class Llama extends Unit{
         this.speed = 2;
         this.range = 3;
         this.attack = 10;
-        this.health = 50;
+        this.health = 65;
         this.unit.src = this.imgBase;
         this.healthBar.innerHTML = this.health;
         this.specialMove = [0,0];
@@ -48,7 +48,7 @@ class Llama extends Unit{
                 }
             }
             let angle = Math.random()*Math.PI*2;
-            this.specialMove = [(Math.cos(angle) + addY)*this.speed, (Math.sin(angle) + addX)*this.speed ]
+            this.specialMove = [(Math.cos(angle) + addY)*this.speed * 1.1, (Math.sin(angle) + addX)*this.speed*1.1 ]
         }
         return this.specialMove;
     }

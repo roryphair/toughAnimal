@@ -2,19 +2,19 @@ h1, h2, h3, h4{
     margin: 5px 0px;
 }
 h1{
-    color: rgb(255, 255, 255);
+    color: rgb(184, 244, 255);
     font-size: 40px;
     font-weight: bold;
     font-family: monospace;
     font-style: italic;
     -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: rgb(0, 82, 7);
-    text-shadow: 5px 5px 10px rgb(0, 117, 20);
+    -webkit-text-stroke-color: rgb(0, 0, 0);
+    text-shadow: 3px 3px 5px rgb(0, 110, 0);
 }
 h2{
     color: rgb(255, 255, 255);
     font-size: 28px;
-    text-shadow: 3px 3px 4px rgb(70, 0, 49);
+    text-shadow: 2px 2px 4px rgb(70, 0, 49);
 }
 
 h3{
@@ -77,10 +77,10 @@ body{
     height: 100%;
 }
 .player{
-    filter: drop-shadow(0px 0px 10px blue);
+    filter: hue-rotate(45deg) drop-shadow(0px 0px 10px blue);
 }
 .enemy{
-    filter: hue-rotate(270deg) drop-shadow(0px 0px 10px red);
+    filter: hue-rotate(270deg) drop-shadow(0px 10px 10px red);
     width: 100px;
     height: 100px
 }
@@ -90,7 +90,7 @@ body{
     position: absolute;
     display: flex;
     color: rgb(255, 255, 255);
-    z-index: 1;
+    z-index: 2;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: rgb(0, 0, 0);
     filter: drop-shadow(0px 0px 10px red);
@@ -113,10 +113,11 @@ body{
 }
 
 .board-square-player {
-    box-shadow: rgba(0, 0, 255, 0.82) 0px 0px 10px;
+    box-shadow: rgba(0, 0, 255, 0.9) 0px 0px 15px;
+    background-color: rgba(255, 255, 255, 0.15);
 }
 .board-square-enemy {
-    box-shadow: rgba(255, 0, 0, 0.82) 0px 0px 10px;
+    box-shadow: rgba(255, 0, 0, 0.9) 0px 0px 15px;
     background-color: rgba(0, 0, 0, 0.20);
 }
 .main{
@@ -142,11 +143,10 @@ body{
     margin: 0px;
     opacity: 100%;
     border-radius: 10px;;
-    color: rgb(255, 255, 255);
+    color: rgb(121, 239, 255);
     font-size: 50px;
     font-weight: bold;
-    font-family: monospace;
-    font-style: italic;
+   font-style: italic;
     -webkit-text-stroke-width: 2px;
     -webkit-text-stroke-color: black;
     text-shadow: 5px 5px 10px rgb(0, 0, 255);
@@ -159,9 +159,11 @@ body{
     min-width: 1500px;
 }
 .main-bottom{
+    height: 40px;
     width: 800px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
     background-size: contain;
     box-shadow: 0px 5px 10px rgb(255, 102, 0);
     border-radius: 20px;
@@ -241,7 +243,7 @@ body{
     box-shadow: 10px 0px 10px rgb(255, 102, 0);
 }
 #overlayBack{
-    z-index: 1;
+    z-index: 5;
     background-color: rgba(40, 0, 56, 0.6);
     position: absolute;
     display: flex;
@@ -270,15 +272,17 @@ body{
 }
 button{
     cursor: pointer;
-    background-color: rgb(219, 219, 219);
     border: rebeccapurple 3px solid;
-    color: rgb(114, 0, 0);
+    color: rgb(0, 36, 153);
+    background-color: rgba(255, 244, 231, 0.8);
+    text-shadow: rgb(255, 158, 120) 0px 2px 2px;
     border-radius: 20px;
     font-size: 16px;
     font-weight: bold;
     font-style: italic;
     padding: 8px 0px;
     width: 125px;
+    box-shadow: -5px 5px 10px rgba(79, 80, 172, 0.7);
 }
 #start-fight-button{
     font-size: 24px;
@@ -286,8 +290,19 @@ button{
     width: 200px;
 }
 button:hover{
-    background-color: royalblue;
-    color: white;
+    background-color: rgba(3, 84, 190, 0.8);
+    color: rgb(241, 218, 255);
+    text-shadow: rgb(70, 176, 202) 0px 2px 2px;
+}
+.button-on{
+    background-color: rgba(3, 84, 190, 0.8);
+    color: rgb(241, 218, 255);
+    text-shadow: rgb(70, 176, 202) 0px 2px 2px;
+}
+.button-on:hover{
+    background-color: rgba(0, 49, 114, 0.8);
+    color: rgb(189, 119, 255);
+    text-shadow: rgb(255, 65, 230) 0px 2px 2px;
 }
 #stats {
     padding: 10px;
@@ -295,4 +310,21 @@ button:hover{
     height: 200px;
     background-color: rgba(0, 0, 37, 0.459);
     border-radius: 20px;
+}
+.main-bottom div{
+    width: 200px;
+    display: flex;
+    height: 35px;
+    align-items: center;
+    justify-content: space-around;
+}
+.main-bottom h1 {
+    font-size: 22px;
+    text-shadow: 2px 2px 4px rgb(255, 132, 50);
+}
+a{
+    color: rgb(147, 255, 156);
+    font-size: 18px;
+    text-shadow: 3px 3px 4px rgb(12, 0, 141);
+    font-style: italic;
 }

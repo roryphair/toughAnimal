@@ -8,7 +8,7 @@ class Otter extends Unit{
         this.imgFight = './src/assets/units/otterFight.png';
         this.attackImg ='./src/assets/units/otterAttack.png';
         this.speed = 4;
-        this.range = 1;
+        this.range = 1.2;
         this.attack = 20;
         this.health = 30;
         this.sound.volume = 0.07;
