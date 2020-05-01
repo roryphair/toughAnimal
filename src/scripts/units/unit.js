@@ -65,7 +65,7 @@ class Unit {
     checkCollision(){
         let leftNudge = 0;
         let topNudge = 0;
-        const totalUnits = this.board.enemyUnits.concat(this.board.playerUnits);
+        const totalUnits = [...this.board.bothUnits];
         totalUnits.forEach( enemy => {
             if(enemy !== this){
                 const leftClose = enemy.unit.offsetLeft - this.unit.offsetLeft;
@@ -95,16 +95,16 @@ class Unit {
     }
 
     move(){
-        if(this.dead){
-            this.timer +=1
-            this.unit.style.opacity = `${100 - this.timer*2}%`;
-            if(this.timer > 50){
-                this.deleteSelf();
+        if(this.fight ){
+            if(this.dead){
+                this.timer +=1
+                this.unit.style.opacity = `${100 - this.timer*2}%`;
+                if(this.timer > 50){
+                    this.deleteSelf();
+                }else{
+                    requestAnimationFrame(this.move);
+                } 
             }else{
-                requestAnimationFrame(this.move);
-            } 
-        }else{
-            if(this.fight && !this.dead){
                 this.timer += 1;
                 const nudge = this.checkCollision();
                 const topNudge = nudge[0];
@@ -144,10 +144,8 @@ class Unit {
                     this.getTarget();
                     requestAnimationFrame(this.move)
                 }
-            }else{
-                this.changeImg( this.imgBase);
             }
-    }
+        }
     }
 
     specialMovement(){
@@ -155,9 +153,9 @@ class Unit {
     }
 
     attackTarget(){
-        if(window.soundsOn) this.sound.play();
         this.createAttack();
         this.target.takeDamage(this.attack);
+        if(window.soundsOn) this.sound.play();
     }
 
       
@@ -184,6 +182,7 @@ class Unit {
         this.attackTimer +=1
         if(this.attackTimer > 45){
             this.attackMade.remove();
+            this.attackMade = null;
         }
         else{
             requestAnimationFrame(this.moveAttack)
@@ -200,13 +199,13 @@ class Unit {
             this.health -= amount;
             this.healthBar.innerHTML = this.health;
             if(this.health <= 0){
-                if(window.soundsOn) {
-                    this.sound.volume = 0.1;
-                    this.sound.src= this.dieSound;
-                    this.sound.play()};
                 this.healthBar.innerHTML = '';
                 this.dead = true;
                 this.timer = 0;
+                            if(window.soundsOn) {
+                                this.sound.volume = 0.1;
+                                this.sound.src= this.dieSound;
+                                this.sound.play()};
             }
         }
     }
@@ -247,8 +246,8 @@ class Unit {
         document.getElementById('board').appendChild(img);
         document.getElementById('board').appendChild(healthBar);
         this.unit = img;
-        if(window.soundsOn && this.player) sound.play();
         this.setHealthBar();
+        if(window.soundsOn && this.player) sound.play();
     }
      
     dragElement(elmnt, unit) {
@@ -319,11 +318,19 @@ class Unit {
     }
 
     deleteSelf(){
-        this.dead = true;
         this.board.deleteUnit(this , this.player);
-        this.sound.remove();
+        this.removeSelf();
+    }
+
+    removeSelf(){
+        this.fight = false;
+        if(this.attackMade) this.attackMade.remove();
+        if(this.sound) this.sound.remove();
+        this.sound = null;
         this.unit.remove();
-        this.healthBar.remove();
+        if(this.healthBar)this.healthBar.remove();
+        this.healthBar = null;
+        this.target = null;
     }
 }
 

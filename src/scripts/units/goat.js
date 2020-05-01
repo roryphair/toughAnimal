@@ -38,16 +38,18 @@ class Goat extends Unit{
     // }
 
     startFight(){
-        this.spot[0] = (7 - this.spot[0]) % 8;
-        this.spot[1] = (7 - this.spot[1]) % 8;
-        this.setCords();
+        let x = (7 - this.spot[0]) % 8;
+        let y  = (7 - this.spot[1]) % 8;
+        this.unit.style.top = (x * 100) + 'px';
+        this.unit.style.left = (y * 100) + 'px';
+        this.setHealthBar();
         super.startFight();
     }
 
     moveAttack(){
-        super.moveAttack();
         this.attackMade.style.top = this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 2) + 'px'; 
         this.attackMade.style.left = this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 2) + 'px'; 
+        super.moveAttack();
     }
 
 

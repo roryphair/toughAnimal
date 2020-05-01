@@ -46,9 +46,9 @@ class Chilla extends Unit{
     }
 
     moveAttack(){
-        super.moveAttack();
         this.attackMade.style.top = this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 1) + 'px'; 
         this.attackMade.style.left = this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 1) + 'px'; 
+        super.moveAttack();
     }
 }
 

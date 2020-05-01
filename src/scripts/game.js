@@ -1,13 +1,11 @@
 import Board from './board';
 class Game{
     constructor(){
-        this.playerUnits = [];
-        this.enemyUnits = [];
         const music = document.createElement("audio")
         document.getElementById('board').append(music);
         this.music = music;
         this.music.loop = true;
-        this.board = new Board(this.playerUnits, this.enemyUnits, this);
+        this.board = new Board(this);
         this.wave = 1;
         this.playerAmount = 1;
         this.waveData = [];
@@ -292,8 +290,10 @@ class Game{
 
     lose(){
         this.changeMusic('base');
-        document.getElementById('overlay').remove();
-        document.getElementById('overlayBack').remove();
+        if(document.getElementById('overlay')){
+            document.getElementById('overlay').remove();
+            document.getElementById('overlayBack').remove();
+        }
         this.board.makeWave( this.playerAmount);
     }
     

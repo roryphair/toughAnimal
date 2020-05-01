@@ -7,10 +7,12 @@ import Sal from './units/sal';
 import Chilla from './units/chilla';
 
 class Board {
-    constructor(playerUnits, enemyUnits, game){
+    constructor(game){
+        window.board = this;
         this.game = game;
-        this.playerUnits = playerUnits;
-        this.enemyUnits = enemyUnits;
+        this.playerUnits = [];
+        this.enemyUnits = [];
+        this.bothUnits = [];
         this.enemyBase = [];
         this.grid = [];
         this.squares = [];
@@ -37,13 +39,14 @@ class Board {
             this.fightButton.innerHTML = 'Reset!';
             this.waveStarted = true;
             this.clearGrid();
+            this.bothUnits = this.playerUnits.concat(this.enemyUnits);
             this.playerUnits.forEach(player => player.startFight());
             this.enemyUnits.forEach(enemy => enemy.startFight());
             requestAnimationFrame(this.boardGlow)
         }
         else if(this.waveStarted){
             this.game.changeMusic('base');
-            this.makeWave(this.maxPlayer);
+            this.game.lose();
         }
     }
 
@@ -75,18 +78,15 @@ class Board {
     makeWave( playerAmount){
         this.fightButton.innerHTML = 'Start Fight';
         this.waveStarted = false;
-        this.setGrid();
         this.maxPlayer = playerAmount;
-        this.enemyUnits.forEach( (enemy) => {
-            enemy.deleteSelf();
-        })
-        this.playerUnits.forEach( (player) => {
-            player.deleteSelf();
-        })
+        this.enemyUnits.forEach(enemy => enemy.removeSelf());
+        this.enemyUnits = []
+        this.playerUnits.forEach(player => player.removeSelf());
+        this.playerUnits = [];
+        this.setGrid();
         this.enemyBase.forEach(enemy => {
             this.makeEnemyUnit(enemy[0], enemy[1]);
         });
-        
         this.setPlayerTotal();
     }
 
@@ -124,6 +124,7 @@ class Board {
     setGrid(){
         for (let i = 0; i < this.grid.length; i++) {
             for (let j = 0; j < this.grid.length; j++) {
+                this.grid[i][j] = null;
                 if(j < 4){
                     this.squares[i][j].className = 'board-square-player';
                 }
@@ -212,7 +213,7 @@ class Board {
     }
 
     deleteUnit(unit, player){
-        this.grid[unit.spot[0]][unit.spot[1]] =null;
+        this.grid[unit.spot[0]][unit.spot[1]] = null;
         if(player){
             const spot = this.playerUnits.indexOf(unit);
             this.playerUnits = this.playerUnits.slice(0, spot).concat(this.playerUnits.slice(spot+ 1, this.playerUnits.length));
@@ -225,6 +226,7 @@ class Board {
             this.enemyUnits = this.enemyUnits.slice(0, spot).concat(this.enemyUnits.slice(spot+ 1, this.enemyUnits.length));
             if(this.enemyUnits.length === 0 && this.waveStarted) this.winWave();
         }
+        this.bothUnits = this.playerUnits.concat(this.enemyUnits)
     }
 
 }

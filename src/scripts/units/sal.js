@@ -24,9 +24,9 @@ class Sal extends Unit{
         return [0,0]
     }
     moveAttack(){
-        super.moveAttack();
         this.attackMade.style.top = this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 1.5) + 'px'; 
         this.attackMade.style.left = this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 1.5) + 'px'; 
+        super.moveAttack();
     }
 }
 
