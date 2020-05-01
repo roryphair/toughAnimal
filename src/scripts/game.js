@@ -68,11 +68,11 @@ class Game{
         e.preventDefault();
         const button = document.getElementById('music-button');
         if(this.music.paused){
-            button.innerHTML = 'Chill Beats On';
             button.className ='button-on';
+            button.style.textDecoration = '';
             this.music.play();
         }else{
-            button.innerHTML = 'Chill Beats Off';
+            button.style.textDecoration = 'line-through';
             button.className ='';
             this.music.pause();
         }
@@ -83,16 +83,17 @@ class Game{
         window.soundsOn = !window.soundsOn;
         const button = document.getElementById('sounds-button');
         if(window.soundsOn){
-            button.innerHTML = 'Squawks Off';
             button.className ='button-on';
+            button.style.textDecoration = '';
         }else{
-            button.innerHTML = 'Squawks On';
             button.className ='';
+            button.style.textDecoration = 'line-through';
         }
     }
 
     makeButton(){
         const music = document.getElementById('music-button');
+        music.style.textDecoration = 'line-through';
         music.onclick = this.startMusic;
         const sounds = document.getElementById('sounds-button');
         sounds.onclick = this.startSounds;
@@ -145,19 +146,19 @@ class Game{
                 this.description.children[1].innerHTML = 'Dog';
                 this.description.children[2].innerHTML = 'Health: 100' + '&nbsp'.repeat(10) + 'Attack: 10';
                 this.description.children[3].innerHTML = 'Range: 1' + '&nbsp'.repeat(15) + 'Speed: 2';
-                this.description.children[4].innerHTML = 'Dog standard animal, balanced, fluffy, pretty. Perfect';
+                this.description.children[4].innerHTML = 'Bog standard animal, balanced, fluffy, pretty. Perfect for a long walk on the beach.';
                 break;
             case 'gibbon':
                 this.description.children[1].innerHTML = 'Gibbon';
                 this.description.children[2].innerHTML = 'Health: 50' + '&nbsp'.repeat(10) + 'Attack: 17';
                 this.description.children[3].innerHTML = 'Range: 2' + '&nbsp'.repeat(15) + 'Speed: 1';
-                this.description.children[4].innerHTML = 'Smacks foes from afar with lanky goodness. Slow and delicate though.';
+                this.description.children[4].innerHTML = 'Smacks foes from afar with lanky goodness. Slow and delicate, like my heart.';
                 break;
             case 'goat':
                 this.description.children[1].innerHTML = 'Goat';
                 this.description.children[2].innerHTML = 'Health: 50' + '&nbsp'.repeat(10) + 'Attack: 15';
                 this.description.children[3].innerHTML = 'Range: 1.3' + '&nbsp'.repeat(15) + 'Speed: 2';
-                this.description.children[4].innerHTML = 'At the start of the fight, the goat jumps to the opposite position on the board. Very slick.';
+                this.description.children[4].innerHTML = 'At the start of the fight, the goat jumps to the opposite position on the board. Very slick, I see you.';
                 break;
             case 'otter':
                 this.description.children[1].innerHTML = 'Otter';
@@ -176,14 +177,14 @@ class Game{
                 this.description.children[1].innerHTML = 'Salamander';
                 this.description.children[2].innerHTML = 'Health: 150' + '&nbsp'.repeat(10) + 'Attack: 3';
                 this.description.children[3].innerHTML = 'Range: 1' + '&nbsp'.repeat(15) + 'Speed: 1';
-                this.description.children[4].innerHTML = 'Low attack, but this animal can take a beating and keeps regenerating! Nice.';
+                this.description.children[4].innerHTML = 'Low attack, but this animal can take a beating and keeps regenerating! Great job.';
                
                 break;
             case 'chilla':
                 this.description.children[1].innerHTML = 'Chilla';
                 this.description.children[2].innerHTML = 'Health: 10' + '&nbsp'.repeat(10) + 'Attack: 1';
                 this.description.children[3].innerHTML = 'Range: 1' + '&nbsp'.repeat(15) + 'Speed: 4';
-                this.description.children[4].innerHTML = 'The chilla is very weak but its fluffyness inspires others to fight harder!';
+                this.description.children[4].innerHTML = 'The chilla is very weak but its fluffyness inspires others to fight harder! Thank you Chilla';
                 break;
         }
     }

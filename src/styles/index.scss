@@ -270,6 +270,8 @@ body{
     filter: drop-shadow(0px 0px 8px rgb(255, 255, 255));
 
 }
+
+
 button{
     cursor: pointer;
     border: rebeccapurple 3px solid;
@@ -280,6 +282,7 @@ button{
     font-size: 16px;
     font-weight: bold;
     font-style: italic;
+    margin:5px;
     padding: 8px 0px;
     width: 125px;
     box-shadow: -5px 5px 10px rgba(79, 80, 172, 0.7);
