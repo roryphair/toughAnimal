@@ -1,5 +1,5 @@
 # Animal Auto Chess Proposal
-
+![toughest animal gif](https://github.com/roryphair/toughAnimal/blob/master/src/assets/other/animal.gif)
 ## Background and Overview
 
 Autochess games are a relatively new type of strategy game based around selecting and positioning units on a board that will then fight with an opponents pieces.
@@ -39,7 +39,7 @@ board.js will house all the units, both the players and the enemies units.
 unit.js will be a parent class with the base level of interaction like health, current target, attack damage, rang, moving into position to attack, dieing.
 individual-unit.js will be a sub-class that will have specific logic associated with that class, i.e. gibbon will have a longer range, do less damage and so on.
 
-## Implementaion Timeline
+## Implementation Timeline
 
 Day 1: Work on general site structure. Set up the game, board and rules rendering. Make it so you can create
 a unit. 
