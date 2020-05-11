@@ -1,6 +1,7 @@
 import Board from './board';
 class Game{
     constructor(){
+        window.speed = 1;
         const music = document.createElement("audio")
         document.getElementById('board').append(music);
         this.music = music;
@@ -20,6 +21,7 @@ class Game{
         this.startMusic = this.startMusic.bind(this);
         this.startSounds = this.startSounds.bind(this);
         this.changeMusic = this.changeMusic.bind(this);
+        this.changeSpeed = this.changeSpeed.bind(this);
         this.makeButton();
         this.changeMusic('base');
         this.timer = 0;
@@ -31,7 +33,7 @@ class Game{
     }
 
     backgroundChange(){
-        this.timer += 1;
+        this.timer += window.speed;
         this.background.style.backgroundColor = `rgba(${Math.abs(Math.sin(this.timer / 345) * 125)}, 0 , ${Math.abs(Math.sin(this.timer/ 234) * 255)}, 0.7)`;
         requestAnimationFrame(this.backgroundChange);
     
@@ -91,7 +93,28 @@ class Game{
         }
     }
 
+    changeSpeed(){
+        window.speed *= 2
+        const button = document.getElementById('speed');
+        if(window.speed > 4){
+            window.speed = 1;
+        }
+        switch(window.speed){
+            case 1:
+                button.innerHTML = 'Speed: Relaxed'
+                break;
+            case 2:
+                button.innerHTML = 'Speed: Zoomer'
+                break;
+            case 4:
+                button.innerHTML = 'Speed: 3 x 10^8'
+                break;
+        }
+    }
+
     makeButton(){
+        const speed = document.getElementById('speed');
+        speed.onclick = this.changeSpeed;
         const music = document.getElementById('music-button');
         music.style.textDecoration = 'line-through';
         music.onclick = this.startMusic;
@@ -168,7 +191,7 @@ class Game{
                 break;
             case 'llama':
                 this.description.children[1].innerHTML = 'Llama';
-                this.description.children[2].innerHTML = 'Health: 65' + '&nbsp'.repeat(10) + 'Attack: 10';
+                this.description.children[2].innerHTML = 'Health: 60' + '&nbsp'.repeat(10) + 'Attack: 10';
                 this.description.children[3].innerHTML = 'Range: 3' + '&nbsp'.repeat(15) + 'Speed: 2';
                 this.description.children[4].innerHTML = 'The Llama is fast and elegant, attacking from afar with spit. They are a bit stubborn though.';
                
@@ -299,7 +322,7 @@ class Game{
         const button = document.createElement('button');
         if(win){ 
             this.changeMusic('win');
-            title.innerHTML = 'You Won, Wowza ' + Math.round(Math.random() * 10000);
+            title.innerHTML = 'You Won, Wowza. Score: ' + Math.floor(100000 / this.board.score);
             button.innerHTML = 'Next Wave!';
             button.onclick = this.win;
   

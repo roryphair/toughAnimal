@@ -14,18 +14,21 @@ class Sal extends Unit{
         this.sound.vol = 0.7;
         this.unit.src = this.imgBase;
         this.healthBar.innerHTML = this.health;
+        this.specialTimer = 0;
     }
 
     specialMovement(){
-        if(this.timer % 45 ===0){
+        this.specialTimer += window.speed;
+        if(this.specialTimer > 40){
+            this.specialTimer = 0;
             this.health += 2;
             this.healthBar.innerHTML = this.health;
         }
         return [0,0]
     }
     moveAttack(){
-        this.attackMade.style.top = this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 1.5) + 'px'; 
-        this.attackMade.style.left = this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 1.5) + 'px'; 
+        this.attackMade.style.top = (this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 1.5) * window.speed)+ 'px'; 
+        this.attackMade.style.left = (this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 1.5) * window.speed)+ 'px'; 
         super.moveAttack();
     }
 }

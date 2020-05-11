@@ -29,12 +29,14 @@ class Board {
         this.totalUnits = document.getElementById('total-units')
         this.maxPlayer = 0;
         this.timer = 0;
+        this.score = 0;
         this.background = document.getElementById('board');
     }
 
     startFight(e){
         e.preventDefault();
         if(!this.waveStarted && this.playerUnits.length > 0){
+            this.score = this.timer;
             this.game.changeMusic('fight');
             this.fightButton.innerHTML = 'Reset!';
             this.fightButton.className = 'button-on';
@@ -52,7 +54,7 @@ class Board {
     }
 
     boardGlow(){
-        this.timer += 1;
+        this.timer += window.speed;
         this.background.style.backgroundColor = `rgba(${ Math.sin(this.timer / 123) * 175}, ${Math.cos(this.timer/ 83) *50} , ${Math.sin(this.timer/ 203) * 255}, 0.7)`;
         
         if(this.waveStarted){
@@ -61,6 +63,7 @@ class Board {
     }
 
     winWave(){
+        this.score = this.timer - this.score;
         this.game.makeOverlay(true);
         this.waveStarted = false;
         this.playerUnits.forEach(player => {

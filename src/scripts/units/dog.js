@@ -21,8 +21,8 @@ class Dog extends Unit{
     }
 
     moveAttack(){
-        this.attackMade.style.top = this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 2) + 'px'; 
-        this.attackMade.style.left = this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 2) + 'px'; 
+        this.attackMade.style.top = (this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 2) * window.speed) + 'px'; 
+        this.attackMade.style.left = (this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 2) * window.speed) + 'px'; 
         super.moveAttack();
     }
 

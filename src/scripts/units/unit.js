@@ -26,7 +26,7 @@ class Unit {
 
     wiggle(){
         if(!this.dead && !this.fight){
-            this.timer +=1;
+            this.timer += window.speed;
             const numb = Math.sin(this.timer/15) * 10;
             const numb2 = Math.sin(this.timer/ 12)/22;
             const numb3 = Math.sin(this.timer/ 9)/27;
@@ -109,13 +109,13 @@ class Unit {
         }else if(this.unit.offsetTop > 700){
             topNudge = 2;
         }
-        return [topNudge, leftNudge];
+        return [topNudge * window.speed, leftNudge * window.speed];
     }
 
     move(){
         if(this.fight ){
             if(this.dead){
-                this.timer +=1
+                this.timer += window.speed;
                 this.unit.style.opacity = `${100 - this.timer*2}%`;
                 if(this.timer > 50){
                     this.deleteSelf();
@@ -123,12 +123,12 @@ class Unit {
                     requestAnimationFrame(this.move);
                 } 
             }else{
-                this.timer += 1;
+                this.timer += window.speed;
                 const nudge = this.checkCollision();
                 const topNudge = nudge[0];
                 const leftNudge = nudge[1];
                 if(this.target && !this.target.dead){
-                    this.attackCooldown += 1;
+                    this.attackCooldown += window.speed;;
                     let y = this.unit.offsetTop - this.target.unit.offsetTop;
                     let x = this.unit.offsetLeft - this.target.unit.offsetLeft;
                     const h =  Math.sqrt(x**2 + y**2);
@@ -154,8 +154,8 @@ class Unit {
                         
                     }
                     const special = this.specialMovement();
-                    this.unit.style.top = (this.unit.offsetTop - topNudge - this.speed * y + special[0]) + "px";
-                    this.unit.style.left = (this.unit.offsetLeft - leftNudge - this.speed * x + special[1] ) + "px";
+                    this.unit.style.top = (this.unit.offsetTop - topNudge - (this.speed * window.speed * y )+ special[0]) + "px";
+                    this.unit.style.left = (this.unit.offsetLeft - leftNudge - (this.speed *window.speed * x) + special[1] ) + "px";
                     this.setHealthBar();
                     requestAnimationFrame(this.move)
                 } else{
@@ -197,7 +197,7 @@ class Unit {
     }
 
     moveAttack(){
-        this.attackTimer +=1
+        this.attackTimer += window.speed;
         if(this.attackTimer > 45){
             this.attackMade.remove();
             this.attackMade = null;

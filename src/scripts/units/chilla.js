@@ -14,6 +14,7 @@ class Chilla extends Unit{
         this.unit.src = this.imgBase;
         this.healthBar.innerHTML = this.health;
         this.specialMove = [0,0];
+        this.specialTimer = 0;
     }
 
     checkCollision(){
@@ -29,25 +30,28 @@ class Chilla extends Unit{
         }else if(this.unit.offsetTop > 700){
             topNudge = 5;
         }
-        return [topNudge, leftNudge];
+        return [topNudge * window.speed, leftNudge * window.speed];
     }
 
     specialMovement(){
-        if(this.timer % 150 ===0){
+        this.specialTimer += window.speed;
+        if(this.specialTimer > 150){
+            
+            this.specialTimer = 0;
             const allies = this.player ? this.board.playerUnits : this.board.enemyUnits;
             allies.forEach(ally => {
                 ally.health += 5;
                 ally.healthBar.innerHTML =  ally.health;
             });
-            this.specialMove = [(Math.random() - .5 )*8, (Math.random() - .5 )*8];
+            this.specialMove = [(Math.random() - .5 )*8 * window.speed, (Math.random() - .5 )*8 * window.speed];
             this.changeImg(this.imgFight, true);
         }
         return this.specialMove;
     }
 
     moveAttack(){
-        this.attackMade.style.top = this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 1) + 'px'; 
-        this.attackMade.style.left = this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 1) + 'px'; 
+        this.attackMade.style.top = (this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 1) * window.speed) + 'px'; 
+        this.attackMade.style.left = (this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 1) * window.speed) + 'px'; 
         super.moveAttack();
     }
 }

@@ -10,7 +10,7 @@ class Llama extends Unit{
         this.speed = 2;
         this.range = 3;
         this.attack = 10;
-        this.health = 65;
+        this.health = 60;
         this.unit.src = this.imgBase;
         this.healthBar.innerHTML = this.health;
         this.specialMove = [0,0];
@@ -29,7 +29,7 @@ class Llama extends Unit{
         }else if(this.unit.offsetTop > 700){
             topNudge = 5;
         }
-        return [topNudge, leftNudge];
+        return [topNudge * window.speed, leftNudge * window.speed];
     }
 
     specialMovement(){
@@ -48,14 +48,14 @@ class Llama extends Unit{
                 }
             }
             let angle = Math.random()*Math.PI*2;
-            this.specialMove = [(Math.cos(angle) + addY)*this.speed * 1.1, (Math.sin(angle) + addX)*this.speed*1.1 ]
+            this.specialMove = [(Math.cos(angle) + addY)*this.speed * 1.1 * window.speed, (Math.sin(angle) + addX)*this.speed*1.1 * window.speed ]
         }
         return this.specialMove;
     }
 
     moveAttack(){
-        this.attackMade.style.top = this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 5) + 'px'; 
-        this.attackMade.style.left = this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 5) + 'px'; 
+        this.attackMade.style.top = (this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 5) * window.speed) + 'px'; 
+        this.attackMade.style.left = (this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 5) * window.speed) + 'px'; 
         super.moveAttack();
     }
 
