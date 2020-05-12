@@ -42,6 +42,56 @@ The board.js file will house all the units, both the players and the enemies uni
 The unit.js file will be a parent class with the base level of interaction like health, current target, attack damage, range, moving into position to attack, dieing.
 The various individual-unit.js files will be a sub-classes that will have specific logic associated with that class, i.e. gibbon will have a longer range, have less speed and so on.
 
+## Highlighted Feature
+Making attack animations using setAnimationFrame was an interesting challenge. First it creates an img tag with the specific attack img of that unit. Then the unit must calculate the direction of the opponent and store it in an instance variable for later use. 
+```javascript
+createAttack(){
+        this.attackTimer = 0;
+        const attack = document.createElement('img');
+        attack.className = this.player ? 'player-attack ' : 'enemy-attack';
+        attack.src = this.attackImg;
+        let y = this.unit.offsetTop - this.target.unit.offsetTop;
+        let x = this.unit.offsetLeft - this.target.unit.offsetLeft;
+        let deg = Math.atan2( y,x);
+        this.attackDirection = deg;
+        attack.style.top = (this.unit.offsetTop - (Math.sin(deg)*40)) + 'px';
+        attack.style.left = (this.unit.offsetLeft - (Math.cos(deg)*40)) + 'px';
+        deg = deg * (180 / Math.PI) - 90;
+        attack.style.transform=  `rotate(${deg}deg)`;
+        this.attackMade = attack;
+        this.attackMade.style.opacity = 0;
+        this.board.background.append(attack);
+        requestAnimationFrame(this.moveAttack)
+    }
+```
+Each unit has a distinct moveAttack that determines how far the attack goes, this is the dog.js moveAttack() function. This is multiplied by the speed of the game to ensure to goes the right distance.
+```javascript
+moveAttack(){
+        this.attackMade.style.top = (this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 2) * window.speed) + 'px'; 
+        this.attackMade.style.left = (this.attackMade.offsetLeft -  (Math.cos(this.attackDirection) * 2) * window.speed) + 'px'; 
+        super.moveAttack();
+    }
+```
+Inside the unit.js moveAttack, there is a timer that is incremented by the speed of the game, there is a timer to change the opacity to fade in and out the attack for a cleaner look. Once the timer reaches a certain point, the attack is deleted.
+```javascript
+moveAttack(){
+        this.attackTimer += window.speed;
+        if(this.attackTimer > 45){
+            this.attackMade.remove();
+            this.attackMade = null;
+        }
+        else{
+            requestAnimationFrame(this.moveAttack)
+            if(this.attackTimer < 5){
+                this.attackMade.style.opacity = (20 * this.attackTimer) + '%';
+            }else if (this.attackTimer > 40 ){
+                this.attackMade.style.opacity = (100 - (20 * (this.attackTimer-40))) + '%';
+            }
+        }
+    }
+```
+This structure allows me to quickly add adjust the behavior of attacks. It also allows flexibility in the future for further customization with little modification needed.
+
 ## Implementation Timeline
 
 Day 1: Worked on general site structure. Set up the game, board and rules rendering. Make it so you can create a unit and move it on the grid to specific spaces. 
