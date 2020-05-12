@@ -43,7 +43,7 @@ The unit.js file will be a parent class with the base level of interaction like 
 The various individual-unit.js files will be a sub-classes that will have specific logic associated with that class, i.e. gibbon will have a longer range, have less speed and so on.
 
 ## Highlighted Feature
-Making attack animations using setAnimationFrame was an interesting challenge. First it creates an img tag with the specific attack img of that unit. Then the unit must calculate the direction of the opponent and store it in an instance variable for later use. 
+Making attack animations using requestAnimationFrame was an interesting challenge. First it creates an img tag with the specific attack img of that unit. Then the unit must calculate the direction of the opponent and store it in an instance variable for later use. 
 ```javascript
 createAttack(){
         this.attackTimer = 0;
