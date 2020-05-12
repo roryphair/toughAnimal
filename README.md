@@ -26,7 +26,7 @@ On the screen there will be a side bar explaining how to play, basically telling
 Clicking on a unit in the left side bar will add it and dragging it outside the box will remove it.
 Inside the box, the colored squares are your own units which you can move around by dragging and dropping. There will be a timer that starts the next wave.
 
-see animalwireframe.jpg
+![wireframe](https://github.com/roryphair/toughAnimal/blob/master/animalwireframe.jpg)
 
 ## Architecture and Technology
 
