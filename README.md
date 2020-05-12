@@ -64,7 +64,7 @@ createAttack(){
         requestAnimationFrame(this.moveAttack)
     }
 ```
-Each unit has a distinct moveAttack that determines how far the attack goes, this is the dog.js moveAttack() function. This is multiplied by the speed of the game to ensure to goes the right distance.
+Each unit has a distinct moveAttack that determines how far the attack goes, this is the dog.js moveAttack() function. This is multiplied by the speed of the game to ensure to goes the right distance. It then runs the parent moveAttack().
 ```javascript
 moveAttack(){
         this.attackMade.style.top = (this.attackMade.offsetTop -  (Math.sin(this.attackDirection)* 2) * window.speed) + 'px'; 
@@ -72,7 +72,7 @@ moveAttack(){
         super.moveAttack();
     }
 ```
-Inside the unit.js moveAttack, there is a timer that is incremented by the speed of the game, there is a timer to change the opacity to fade in and out the attack for a cleaner look. Once the timer reaches a certain point, the attack is deleted.
+Inside the parent unit.js moveAttack, there is a timer that is incremented by the speed of the game, there is a timer to change the opacity to fade in and out the attack for a cleaner look. Once the timer reaches a certain point, the attack is deleted.
 ```javascript
 moveAttack(){
         this.attackTimer += window.speed;
